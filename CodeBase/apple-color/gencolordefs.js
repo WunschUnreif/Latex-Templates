@@ -40,7 +40,7 @@ function genVariations() {
         let color = colors[name]
         variedColors[`${name}-base`] = getHex(color)
         for(let grade = 1; grade <= 5; grade += 1) {
-            variedColors[`${name}-lighten-${grade}`] = getHex(mixed(color, [255, 255, 255], 1 - 0.15 * grade))
+            variedColors[`${name}-lighten-${grade}`] = getHex(mixed(color, [255, 255, 255], 1 - 0.18 * grade))
         }
         for(let grade = 1; grade <= 5; grade += 1) {
             variedColors[`${name}-darken-${grade}`] = getHex(mixed(color, [0, 0, 0], 1 - 0.1 * grade))
