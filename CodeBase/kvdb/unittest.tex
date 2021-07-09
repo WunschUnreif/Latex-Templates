@@ -1,0 +1,63 @@
+%% unittest.tex
+%% Copyright 2021 WunschUnreif
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is WunschUnreif.
+%
+% This work consists of the files unittest.tex
+
+\documentclass{article}
+
+\usepackage{kvdb}
+
+\makeatletter
+\newcommand{\testtrigger}{\title{\test@title}\author{WunschUnreif}}
+\kvdb@create{test}{
+    title = {
+        initial = origin title,
+        trigger = {
+            \protect\testtrigger%
+        }
+    },
+    option = {
+        choices = {
+            on, off
+        },
+        default = on,
+        initial = off
+    }
+}
+
+\kvsetkeys{test}{title = Unit test of \texttt{kvdb}}
+
+\makeatother
+
+\begin{document}
+    \maketitle
+    \makeatletter
+        Currently, option = \test@option.
+        \iftest@option@on 
+            The if statements suggests option = on.
+        \else 
+            The if statements suggests option = off.
+        \fi
+        \par 
+        We set it to on using its default. \kvsetkeys{test}{option}
+        \par
+        Now, option = \test@option.
+        \iftest@option@on 
+            The if statements suggests option = on.
+        \else 
+            The if statements suggests option = off.
+        \fi
+    \makeatother
+\end{document}
