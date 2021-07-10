@@ -1,0 +1,74 @@
+\documentclass[lineno=off]{wunschnote}
+\usepackage{lipsum}
+
+\noteconfig{
+    title = How to use \code{wunschnote} to write notes,
+    course = wunschnote,
+    lecture = 1,
+}
+
+\begin{document}
+    \maketitle
+
+    \section{Titles}
+    \subsection{subsection}
+    \subsubsection{subsubsection}
+    \paragraph{paragraph} These are title styles
+
+    \subsection{Theorems}
+
+    \begin{theorem}[named theorem]
+        This is a theorem with name.
+    \end{theorem}
+
+    \begin{theorem}
+        No name theorem.
+    \end{theorem}
+
+    \begin{lemma}
+        This is a lemma.
+    \end{lemma}
+
+    \begin{corollary}
+        This is a corollary.
+    \end{corollary}
+
+    \begin{definition}
+        This is a definition.
+    \end{definition}
+
+    \begin{example}
+        This is an example.
+    \end{example}
+
+    \begin{remark}
+        This is a remark.
+    \end{remark}
+
+    \begin{remark*}
+        Each theorem-like environment has a starred version which doesn't increase nor show the counter.
+    \end{remark*}
+
+    \begin{proof}
+        This document class is a trivial result.
+    \end{proof}
+
+    \section{Boxes}
+    \label{sec:boxes}
+    \begin{wunschbox}[A fantastic box]
+        You can use the box with environment \verb|deanbox|.
+    \end{wunschbox}
+
+    \begin{wunschbox}[]
+        A \verb|deanbox| takes 2 optional arguments. The first one is the title of the box. Of course you can get a box without title.
+    \end{wunschbox}
+
+    \begin{wunschbox}[Setting box colors][\successcolor]
+        The second optional argument controls the color of the box. You should only pass the color series name such as \verb|green| or use the theme color such as \verb|\successcolorname|. By default, the box frame and the title bar use the base color and the box background uses the \verb|-lighten-5| variation.
+    \end{wunschbox}
+
+    There is also an inline version of boxes using command \code{\textbackslash inlbox}. Since inline boxes are preferable to display short codes, we also provide the command \code{\textbackslash code} for such purposes, which is equivalent to a \code{\textbackslash texttt} inside a \code{\textbackslash inlbox}.
+
+
+    \lipsum
+\end{document}
