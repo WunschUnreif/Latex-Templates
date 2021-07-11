@@ -1,0 +1,335 @@
+\documentclass[showbib, lang=zh]{DeanReport}
+
+\usepackage{lipsum}
+\usepackage{xltxtra}
+\usepackage{longtable}
+
+\title{Weekly Report}
+\author{Dean Liu}
+\deaninfo{
+    author      = WunschUnreif,
+    start       = 7/5,
+    end         = 7/11,
+    emotion     = 3,
+    progress    = 6,
+    positivity  = 9,
+}
+
+\begin{document}
+
+\maketitle
+
+\section{使用}
+只需下面一行代码，就可以完整导入本文档类。
+
+\begin{codeblock*}
+\begin{minted}[autogobble]{latex}
+    \documentclass{DeanReport}
+\end{minted}
+\end{codeblock*}
+
+编译使用本文档类的文档需要使用\XeLaTeX。如果还希望利用\code{minted}包来渲染代码，推荐使用下面的编译命令。
+
+\begin{codeblock*}
+\begin{minted}[autogobble]{bash}
+    xelatex -shell-escape <your tex root file.tex>
+\end{minted}
+\end{codeblock*}
+
+生成参考文献则需要\code{xe->bib->xe->xe}的编译流程。
+
+
+\section{文档类选项}
+可以通过\code{\textbackslash documentclass[<kvpairs>]\{DeanReport\}}的格式向本文档类指定选项。下面的表格列举了所有支持的选项及其含义。额外的选项将会根据选择的语言传递给\code{article}文档类或者\code{ctexart}文档类。
+
+\begin{table}[!h]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{lp{30mm}llp{50mm}}
+        \hline
+        选项名 & 取值 & 缺省值 & 初始值 & 解释\\
+        \hline
+        \code{lang} & \code{en}, \code{zh} & & \code{en} & 指定主要语言\\
+        \code{showlineno} & \code{on}, \code{off} &\code{on} & \code{off} & 开关行号显示\\
+        \code{showbib} & \code{on}, \code{off} &\code{on} & \code{off} & 开关参考文献\\
+        \code{bibstyle} &  &  & \code{abbrv} & 设置参考文献著录格式\\
+        \hline
+    \end{tabular}
+\end{table}
+
+例如，下面的代码将主要语言设置为中文，开启行号显示和参考文献，并将参考文献著录格式设置为\code{alpha}。
+
+\begin{codeblock}[title = 指定文档类选项的示例]
+\begin{minted}[autogobble]{latex}
+    \documentclass[
+        lang        = zh,
+        showlineno,
+        showbib,
+        bibstyle    = alpha
+    ]{DeanReport}
+\end{minted}
+\end{codeblock}
+
+\paragraph{Difference between `default' and `initial'} An option may have a default value together with an initial value. The initial value is used if you had never passed the option. On the other hand, the default value is used when you pass the option only with its key but don't specify a value. For example,
+\begin{codeblock*}
+\begin{minted}[autogobble]{latex}
+    \documentclass[showbib]{DeanReport}
+\end{minted}
+\end{codeblock*}
+is equivalent to 
+\begin{codeblock*}
+\begin{minted}[autogobble]{latex}
+    \documentclass[showbib=on]{DeanReport}
+\end{minted}
+\end{codeblock*}
+since the default value of \code{showbib} is \code{on}.
+\par 
+If \code{showbib} isn't passed, e.g. \code{\textbackslash documentclass\{DeanReport\}}, then the initial value \code{off} will be used by default.
+
+
+\section{Commands and Environments}
+\subsection{Command \texorpdfstring{\code{\textbackslash deanset}}{deanset} }
+
+You can change any settings of this document class using \code{\textbackslash deanset}. The settings, including class options, are organized as a hierarchical key-value database. You may consult the source code of this class to understand each setting. As an example, you can change the title and the default color of code blocks by the following code.
+\begin{codeblock*}
+\begin{minted}[autogobble]{latex}
+    \deanset{
+        codeblocksettings = {
+            color = \accentcolorname,
+            caption = Another Listing Title
+        }
+    }
+\end{minted}
+\end{codeblock*}
+
+\begin{deanbox}[\texttt{\textbackslash deanset} ignores groups][\warningcolorname]
+    It is important to remember that the effect of \code{\textbackslash deanset} is global. No matter where you use this command, its effect will preserve until you call this command again.
+\end{deanbox}
+
+\subsection{Command \code{\textbackslash deaninfo}}
+You can set the basic information of your report using \code{\textbackslash deaninfo}. It takes one argument which is a list of key-value pairs. The entries you can set are listed below.
+\begin{center}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{longtable}{llllp{50mm}}
+        \hline
+        Entry Name & Choices & Initial & Explanation\\
+        \hline
+        \code{title} &  & Weekly Report & The title of your report\\
+        \code{author} &  & Hongzhou Liu & Your name\\\hline
+        \\
+        \code{start} &  & [Start Date Here] & Start date of the week\\
+        \code{end} &  & [End Date Here] & End date of the week\\
+        \code{emotion} & 0, $\ldots$, 9 & 7 & Emotion index\\
+        \code{progress} & 0, $\ldots$, 9 & 7 & Progress index\\
+        \code{positivity} & 0, $\ldots$, 9 & 7 & Positivity index\\
+        \code{bib} & & \texttt{references} & Bib file name\\
+        \hline
+    \end{longtable}
+\end{center}
+
+The information setting of this document is
+\begin{codeblock*}
+\begin{minted}[autogobble]{latex}
+    \deaninfo{
+        author      = WunschUnreif,
+        start       = Jul. 5,
+        end         = Jul. 11,
+        emotion     = 3,
+        progress    = 6,
+        positivity  = 9,
+    }
+\end{minted}
+\end{codeblock*}
+
+\subsection{Box Generating}
+We provide a fantastic box environment and inline boxes in this class. Detailed description can be found in section \ref{sec:boxes}.
+
+\subsection{Environments \code{codeblock} and \code{codeblock*}}
+Code presentation is a ubiquitous need. We provide environment \code{codeblock} and its starred version \code{codeblock*} for you. The only difference is that the unstarred version maintains a counter for numbering code blocks while \code{codeblock*} doesn't provide numbering.
+They take an optional key-value parameter where you can specify the title and the color with key \code{title} and \code{color} respectively.
+\par 
+Note however these environments only provides a box. Inside them you need to use other environments to typeset the code itself. We highly recommend the \code{minted} package for displaying code.
+\par 
+As an example, the following code 
+\begin{codeblock*}
+\inputminted[autogobble]{latex}{examplecode}
+\end{codeblock*}
+yields the block
+\begin{codeblock}[title = Hello World in Python, color = pink]
+\begin{minted}[autogobble]{python}
+    print("Hello, World!")
+\end{minted}
+\end{codeblock}
+
+\subsection{Theorem-like Environments}
+We provide environments \code{theorem}, \code{lemma}, \code{corollary}, \code{definition}, \code{example}, \code{remark} just like the standard \code{amsthm} environments, but implemented independently to support a colorful box. These environments share a common counter which is reset at each section. Each of these environments has a corresponding starred version which doesn't step the counters. As before, these environments take an optional argument which is their title. A demo of these environments are given in section \ref{sec:math}.
+
+
+\section{Math}
+\label{sec:math}
+
+\subsection{Formulas}
+An example:
+\begin{displaymath}
+    \mathbf{B}(P) = \frac{\mu_0}{4\pi}\int\frac{\mathbf{I}\times\hat{r}'}{r'^2}{\rm d}l = \frac{\mu_0}{4\pi} I \int \frac{{\rm d}\bm{l}\times \hat{r}'}{r'^2}
+\end{displaymath}
+
+Note that the \code{displaymath} environment (equivalently \code{\textbackslash[...\textbackslash]}) is preferred to the old \code{\$\$}.
+
+\subsection{Math Fonts}
+There are several math fonts you can use:
+\allowdisplaybreaks
+\begin{align}
+    ABCDEFGHIJKLMNOPQRSTUVWXYZ\\
+    abcdefghijklmnopqrstuvwxyz\\
+    \mathbf{abcdefghijklmnopqrstuvwxyz}\\
+    \bm{abcdefghijklmnopqrstuvwxyz}\\
+    \mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
+    \mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
+    \mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
+    \mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
+\end{align}
+
+\subsection{Theorems}
+
+\begin{theorem}[named theorem]
+    This is a theorem with name.
+\end{theorem}
+
+\begin{theorem}
+    No name theorem.
+\end{theorem}
+
+\begin{lemma}
+    This is a lemma.
+\end{lemma}
+
+\begin{corollary}
+    This is a corollary.
+\end{corollary}
+
+\begin{definition}
+    This is a definition.
+\end{definition}
+
+\begin{example}
+    This is an example.
+\end{example}
+
+\begin{remark}
+    This is a remark.
+\end{remark}
+
+\begin{remark*}
+    Each theorem-like environment has a starred version which doesn't increase nor show the counter.
+\end{remark*}
+
+\begin{proof}
+    This document class is a trivial result.
+\end{proof}
+
+\section{Boxes}
+\label{sec:boxes}
+\begin{deanbox}[A fantastic box]
+    You can use the box with environment \verb|deanbox|.
+\end{deanbox}
+
+\begin{deanbox}[]
+    A \verb|deanbox| takes 2 optional arguments. The first one is the title of the box. Of course you can get a box without title.
+\end{deanbox}
+
+\begin{deanbox}[Setting box colors][\successcolorname]
+    The second optional argument controls the color of the box. You should only pass the color series name such as \verb|green| or use the theme color such as \verb|\successcolorname|. By default, the box frame and the title bar use the base color and the box background uses the \verb|-lighten-5| variation.
+\end{deanbox}
+
+There is also an inline version of boxes using command \code{\textbackslash inlbox}. Since inline boxes are preferable to display short codes, we also provide the command \code{\textbackslash code} for such purposes, which is equivalent to a \code{\textbackslash texttt} inside a \code{\textbackslash inlbox}.
+
+
+\section{Enumerate Environments}
+An \code{enumerate}:
+\begin{enumerate}
+    \item enum 1
+    \item enum 2
+    \item enum paragraph \lipsum[2]
+\end{enumerate}
+Large numbers:
+\begin{enumerate}[start=9]
+    \item enum 1
+    \item enum 2
+    \item enum paragraph \lipsum[2]
+\end{enumerate}
+
+A nested \code{enumerate}:
+\begin{enumerate}
+    \item First item.
+    \item Nested 
+    \begin{enumerate}
+        \item Item 2.1
+        \item Item 2.2
+        \item Level 3:
+        \begin{enumerate}
+            \item Item 2.3.1
+            \item Item 2.3.2
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+An \code{description}:
+\begin{description}
+    \item[一] first item.
+    \item[第二] second item.
+\end{description}
+
+An \code{itemize}:
+\begin{itemize}
+    \item First item.
+    \item Nested 
+    \begin{itemize}
+        \item Item 2.1
+        \item Item 2.2
+        \item Level 3:
+        \begin{itemize}
+            \item Item 2.3.1
+            \item Item 2.3.2
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+
+\section{孔乙己}
+鲁镇的酒店的格局，是和别处不同的：都是当街一个曲尺形的大柜台，柜里面预备着热水，可以随时温酒。做工的人，傍午傍晚散了工，每每花四文铜钱，买一碗酒，——这是二十多年前的事，现在每碗要涨到十文，——靠柜外站着，热热的喝了休息；倘肯多花一文，便可以买一碟盐煮笋，或者茴香豆，做下酒物了，如果出到十几文，那就能买一样荤菜，但这些顾客，多是短衣帮，大抵没有这样阔绰。只有穿长衫的，才踱进店面隔壁的房子里，要酒要菜，慢慢地坐喝。
+
+我从十二岁起，便在镇口的咸亨酒店里当伙计，掌柜说，我样子太傻，怕侍候不了长衫主顾，就在外面做点事罢。外面的短衣主顾，虽然容易说话，但唠唠叨叨缠夹不清的也很不少。他们往往要亲眼看着黄酒从坛子里舀出，看过壶子底里有水没有，又亲看将壶子放在热水里，然后放心：在这严重监督下，羼水也很为难。所以过了几天，掌柜又说我干不了这事。幸亏荐头的情面大，辞退不得，便改为专管温酒的一种无聊职务了。
+
+我从此便整天的站在柜台里，专管我的职务。虽然没有什么失职，但总觉得有些单调，有些无聊。掌柜是一副凶脸孔，主顾也没有好声气，教人活泼不得；只有孔乙己到店，才可以笑几声，所以至今还记得。
+
+孔乙己是站着喝酒而穿长衫的唯一的人。他身材很高大；青白脸色，皱纹间时常夹些伤痕；一部乱蓬蓬的花白的胡子。穿的虽然是长衫，可是又脏又破，似乎十多年没有补，也没有洗。他对人说话，总是满口之乎者也，叫人半懂不懂的。因为他姓孔，别人便从描红纸上的“上大人孔乙己”这半懂不懂的话里，替他取下一个绰号，叫作孔乙己。孔乙己一到店，所有喝酒的人便都看着他笑，有的叫道，“孔乙己，你脸上又添上新伤疤了！”他不回答，对柜里说，“温两碗酒，要一碟茴香豆。”便排出九文大钱。他们又故意的高声嚷道，“你一定又偷了人家的东西了！”孔乙己睁大眼睛说，“你怎么这样凭空污人清白……”“什么清白？我前天亲眼见你偷了何家的书，吊着打。”孔乙己便涨红了脸，额上的青筋条条绽出，争辩道，“窃书不能算偷……窃书！……读书人的事，能算偷么？”接连便是难懂的话，什么“君子固穷”，什么“者乎”之类，引得众人都哄笑起来：店内外充满了快活的空气。
+
+听人家背地里谈论，孔乙己原来也读过书，但终于没有进学，又不会营生；于是愈过愈穷，弄到将要讨饭了。幸而写得一笔好字，便替人家抄抄书，换一碗饭吃。可惜他又有一样坏脾气，便是好喝懒做。坐不到几天，便连人和书籍纸张笔砚，一齐失踪。如是几次，叫他抄书的人也没有了。孔乙己没有法，便免不了偶然做些偷窃的事。但他在我们店里，品行却比别人都好，就是从不拖欠；虽然间或没有现钱，暂时记在粉板上，但不出一月，定然还清，从粉板上拭去了孔乙己的名字。
+
+孔乙己喝过半碗酒，涨红的脸色渐渐复了原，旁人便又问道，“孔乙己，你当真认识字么？”孔乙己看着问他的人，显出不屑置辩的神气。他们便接着说道，“你怎的连半个秀才也捞不到呢？”孔乙己立刻显出颓唐不安模样，脸上笼上了一层灰色，嘴里说些话；这回可是全是之乎者也之类，一些不懂了。在这时候，众人也都哄笑起来：店内外充满了快活的空气。
+
+“多乎哉?不多也。”
+
+有几回，邻居孩子听得笑声，也赶热闹，围住了孔乙己。他便给他们一人一颗。孩子吃完豆，仍然不散，眼睛都望着碟子。孔乙己着了慌，伸开五指将碟子罩住，弯腰下去说道，“不多了，我已经不多了。”直起身又看一看豆，自己摇头说，“不多不多！多乎哉？不多也。”于是这一群孩子都在笑声里走散了。
+
+孔乙己是这样的使人快活，可是没有他，别人也便这么过。
+
+有一天，大约是中秋前的两三天，掌柜正在慢慢的结账，取下粉板，忽然说，“孔乙己长久没有来了。还欠十九个钱呢！”我才也觉得他的确长久没有来了。一个喝酒的人说道，“他怎么会来？……他打折了腿了。”掌柜说，“哦！”“他总仍旧是偷。这一回，是自己发昏，竟偷到丁举人家里去了。他家的东西，偷得的吗？”“后来怎么样？”“怎么样？先写服辩，后来是打，打了大半夜，再打折了腿。”“后来呢？”“后来打折了腿了。”“打折了怎样呢？”“怎样？……谁晓得？许是死了。”掌柜也不再问，仍然慢慢的算他的账。
+
+中秋过后，秋风是一天凉比一天，看看将近初冬；我整天的靠着火，也须穿上棉袄了。一天的下半天，没有一个顾客，我正合了眼坐着。忽然间听得一个声音，“温一碗酒。”这声音虽然极低，却很耳熟。看时又全没有人。站起来向外一望，那孔乙己便在柜台下对了门槛坐着。他脸上黑而且瘦，已经不成样子；穿一件破夹袄，盘着两腿，下面垫一个蒲包，用草绳在肩上挂住；见了我，又说道，“温一碗酒。”掌柜也伸出头去，一面说，“孔乙己么？你还欠十九个钱呢！”孔乙己很颓唐的仰面答道，“这……下回还清罢。这一回是现钱，酒要好。”掌柜仍然同平常一样，笑着对他说，“孔乙己，你又偷了东西了！”但他这回却不十分分辩，单说了一句“不要取笑！”“取笑？要是不偷，怎么会打断腿？”孔乙己低声说道，“跌断，跌，跌……”他的眼色，很像恳求掌柜，不要再提。此时已经聚集了几个人，便和掌柜都笑了。我温了酒，端出去，放在门槛上。他从破衣袋里摸出四文大钱，放在我手里，见他满手是泥，原来他便用这手走来的。不一会，他喝完酒，便又在旁人的说笑声中，坐着用这手慢慢走去了。
+
+自此以后，又长久没有看见孔乙己。到了年关，掌柜取下粉板说，“孔乙己还欠十九个钱呢！”到第二年的端午，又说“孔乙己还欠十九个钱呢！”到中秋可是没有说，再到年关也没有看见他。
+
+我到现在终于没有见——大约孔乙己的确死了。
+
+\section{Acknowledgements}
+    We thank the document \code{clsguide.pdf}\cite{clsguide} for a good instruction on how to write \LaTeX{} classes.
+
+    We thank the packages \code{kvoptions}, \code{kvdefinekeys} and \code{kvsetkeys} for providing an easy-to-use key-value method for option managements.
+
+    We also thank the package \code{tcolorbox} for providing a powerful package to draw beautiful boxes.
+
+    Finally, we thank the package \code{minted} together with the engine \code{Pygmentize} as they provided a modern typeset for codes.
+
+\end{document}

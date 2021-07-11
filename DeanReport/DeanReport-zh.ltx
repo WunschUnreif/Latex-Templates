@@ -1,0 +1,487 @@
+%% DeanReport-zh.ltx
+%% Copyright 2021 WunschUnreif
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is WunschUnreif.
+%
+% This work consists of the files DeanReport.cls, DeanReport-en.ltx, 
+% DeanReport-zh.ltx.
+
+
+%% Option processing and base class loading
+\DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexart}}
+\ProcessKeyvalOptions*
+\LoadClass[fontset=fandol, 11pt]{ctexart}
+
+
+%% Package loading
+\RequirePackage{xeCJK}
+\RequirePackage{amsthm}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[heuristica,vvarbb,bigdelims]{newtxmath}
+\RequirePackage{libertine}
+\RequirePackage[scale=0.8]{FiraMono}
+\RequirePackage{bm}
+\RequirePackage{bbm}
+\RequirePackage{indentfirst}
+\RequirePackage{lineno}
+\RequirePackage{fancybox}
+\RequirePackage{titlesec}
+\RequirePackage{xhfill}
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{hyperref}
+\RequirePackage{xargs}
+\RequirePackage{tcolorbox}
+\RequirePackage{fancyvrb}
+\RequirePackage{minted}
+
+
+%% Font for Emoji 
+\newfontfamily\emoji{seguiemj.ttf}[AutoFakeBold]
+
+
+\xeCJKDeclareCharClass{CJK}{`0 -> `9}
+
+
+%% Page dimensions
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0ex}
+
+\geometry{%
+    a4paper,
+    hmargin=1in,
+    top=1in,
+    headsep=0.2in,
+    bottom=1.2in
+}
+
+\pagestyle{plain}
+
+
+%% Document info database
+\kv@define@key{deanwr}{info}{\kvsetkeys{deanwr@info}{#1}}
+\deanwr@create@kv@db{deanwr@info}{
+    title = {
+        initial = 周~~报,
+    },
+    author = {
+        initial = 刘宏洲,
+    },
+    start = {
+        initial = [起始日期]
+    },
+    end = {
+        initial = [结束日期]
+    },
+    emotion = {
+        choices = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+        initial = 7,
+        trigger = deanwr@set@emoji@emotion,
+    },
+    progress = {
+        choices = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+        initial = 7,
+        trigger = deanwr@set@emoji@progress,
+    },
+    positivity = {
+        choices = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+        initial = 7,
+        trigger = deanwr@set@emoji@positivity,
+    },
+    bib = {
+        initial = references,
+    },
+}
+
+\newcommand{\deaninfo}[1]{\kvsetkeys{deanwr@info}{#1}}
+
+\newcommand{\deanwr@set@emoji@emotion}{
+    \ifthenelse{
+        \deanwr@info@emotion < 4
+    }{
+        \newcommand{\deanwr@emoji@emotion}{\color{purple}😞}
+    }{
+        \ifthenelse{
+            \deanwr@info@emotion < 7
+        }{
+            \newcommand{\deanwr@emoji@emotion}{\color{blue}😐}
+        }{
+            \newcommand{\deanwr@emoji@emotion}{\color{orange}😀 }
+        }
+    }
+}
+
+\newcommand{\deanwr@set@emoji@progress}{
+    \ifthenelse{
+        \deanwr@info@progress < 4
+    }{
+        \newcommand{\deanwr@emoji@progress}{\color{red}⛔}
+    }{
+        \ifthenelse{
+            \deanwr@info@progress < 7
+        }{
+            \newcommand{\deanwr@emoji@progress}{\color{green}✔}
+        }{
+            \newcommand{\deanwr@emoji@progress}{\color{orange}🎇 }
+        }
+    }
+}
+
+\newcommand{\deanwr@set@emoji@positivity}{
+    \ifthenelse{
+        \deanwr@info@positivity < 4
+    }{
+        \newcommand{\deanwr@emoji@positivity}{\color{blue}🐟}
+    }{
+        \ifthenelse{
+            \deanwr@info@positivity < 7
+        }{
+            \newcommand{\deanwr@emoji@positivity}{\color{orange}🏊}
+        }{
+            \newcommand{\deanwr@emoji@positivity}{\color{red}🏆 }
+        }
+    }
+}
+
+%% Title styles
+\renewcommand{\maketitle}{
+    \thispagestyle{plain}
+    \nolinenumbers
+
+    \begin{tcolorbox}[
+        enhanced, 
+        colframe=black, colback=white,  
+        boxrule=0.5pt, 
+        arc=0mm, sharp corners=all, 
+        left=2ex, right=2ex
+    ]
+        \begin{center}
+            {\heiti\LARGE \deanwr@info@title}\\
+            \vspace{2ex}
+            \normalfont\heiti\sffamily\normalsize
+            {学生姓名:} {\deanwr@info@author} \hfill \deanwr@info@start ~--~ \deanwr@info@end
+        \end{center}
+        \tcblower
+        {\heiti 心情：} \deanwr@info@emotion~{\emoji{}\bfseries \deanwr@emoji@emotion}
+        \hfill
+        {\heiti 进展：} \deanwr@info@progress~{\emoji{}\bfseries \deanwr@emoji@progress}
+        \hfill
+        {\heiti 动力：} \deanwr@info@positivity~{\emoji{}\bfseries \deanwr@emoji@positivity}
+    \end{tcolorbox}
+
+    \ifdeanwr@showlineno@on
+    \linenumbers
+    \fi
+}
+
+\titleformat{\section}[hang]{%
+    \large\normalfont\sffamily
+}{%
+    第 \thesection \ 部分%
+}{1em}{%
+    \nolinenumbers
+}[%
+    \ifdeanwr@showlineno@on
+    \linenumbers
+    \fi
+]
+
+\titleformat{\subsection}[hang]{%
+    \large\normalfont\sffamily
+}{%
+    \thesubsection
+}{.5em}{%
+    \nolinenumbers
+}[%
+    \ifdeanwr@showlineno@on
+    \linenumbers
+    \fi
+]
+
+\titleformat{\subsubsection}[hang]{%
+    \normalsize\normalfont\sffamily
+}{%
+    \thesubsubsection
+}{.5em}{%
+    \nolinenumbers
+}[%
+    \ifdeanwr@showlineno@on
+    \linenumbers
+    \fi
+]
+
+\titleformat{\paragraph}[runin]{%
+    \normalsize\normalfont\sffamily\bfseries
+}{}{.5em}{}[]
+
+
+%% tcolorbox settings
+\tcbuselibrary{skins, breakable}
+
+%% theorem styles and environments
+% thmbox{color-name}{title}
+\newenvironment{deanwr@thmbox}[2]{
+    \nolinenumbers
+    \begingroup
+    \tcbset{
+        enhanced, 
+        adjusted title={#2}, 
+        colframe=#1-base, colback=#1-lighten-5, 
+        fonttitle=\normalfont\sffamily, 
+        boxrule=0.5pt, toprule=0mm, 
+        arc=0mm, sharp corners=all, 
+        left=1ex, right=1ex, 
+        breakable
+    }
+    \tcolorbox
+}{
+    \endtcolorbox
+    \endgroup
+    \ifdeanwr@showlineno@on
+    \linenumbers
+    \fi
+}
+
+% create a theorem with grammar
+%   \createthm
+%       [<counter reset>]
+%       {<name>}{<display name>}
+%       {color name}
+%       [use counter]
+\newcommandx{\createthm}[5][1=section, 5={}]{
+    \@namedef{deanwr@thm#2@usecounter}{#5}
+    \@namedef{deanwr@thm#2@countername}{#2}
+    \if\relax\@nameuse{deanwr@thm#2@usecounter}\relax
+        \newcounter{#2}[#1]
+        \@namedef{the#2}{\arabic{#1}.\arabic{#2}}
+    \else 
+        \@namedef{deanwr@thm#2@countername}{#5}
+    \fi
+    \newenvironment{#2}[1][]{
+        \expandafter\refstepcounter{\@nameuse{deanwr@thm#2@countername}}
+        \deanwr@thmbox{#4}{#3~\expandafter\@nameuse{the\@nameuse{deanwr@thm#2@countername}}
+            \def\deanwr@@thmname{##1}
+            \if\relax\deanwr@@thmname\relax\else(##1)\fi
+        }
+    }{
+        \enddeanwr@thmbox
+    }
+    \newenvironment{#2*}[1][]{
+        \deanwr@thmbox{#4}{#3
+            \def\deanwr@@thmname{##1}
+            \if\relax\deanwr@@thmname\relax\else(##1)\fi
+        }
+    }{
+        \enddeanwr@thmbox
+    }
+}
+
+\createthm{theorem}{定理}{\primarycolorname}
+\createthm{lemma}{引理}{\primarycolorname}[theorem]
+\createthm{corollary}{推论}{\primarycolorname}[theorem]
+
+\createthm{definition}{定义}{\secondarycolorname}[theorem]
+\createthm{example}{例}{\infocolorname}[theorem]
+\createthm{remark}{注}{\accentcolorname}[theorem]
+
+
+%% Code block boxes
+% \deanwr@codebox{title}{color}
+\newenvironmentx{deanwr@codebox}[2]{
+    \nolinenumbers
+    \def\deanwr@@boxtitle{#1}
+    \if\relax\deanwr@@boxtitle\relax
+        \tcolorbox[%
+            enhanced, 
+            colframe=#2-base, colback=#2-lighten-5, 
+            fonttitle=\normalfont\sffamily, 
+            boxrule=0pt, toprule=0.5pt, bottomrule=0.5pt,
+            arc=0mm, sharp corners=all, 
+            boxsep=0pt,
+            left=1ex, right=1ex, 
+            top=1ex, bottom=1ex,
+            breakable
+        ]
+    \else
+        \tcolorbox[%
+            enhanced, 
+            adjusted title={#1},%
+            colframe=#2-base, colback=#2-lighten-5, 
+            fonttitle=\normalfont\sffamily, 
+            boxrule=0pt, bottomrule=0.5pt, 
+            arc=0mm, sharp corners=all, 
+            left=1ex, right=1ex, 
+            breakable
+        ]
+    \fi
+}{
+    \endtcolorbox
+    \ifdeanwr@showlineno@on
+    \linenumbers
+    \fi
+}
+
+%% Code block environment
+% \begin{codeblock}[title][color=info]
+%     <code>
+% \end{codeblock}
+
+\kv@define@key{deanwr}{codeblocksettings}{\kvsetkeys{deanwr@codeblocksettings}{#1}}
+\deanwr@create@kv@db{deanwr@codeblocksettings}{
+    color = {
+        initial = \infocolorname,
+    },
+    title = {
+        initial = {}
+    },
+    caption = {
+        initial = 代码,
+    },
+}
+\deanwr@create@kv@db{deanwr@codeblocksettings@@stored}{
+    color = {
+        initial = \infocolorname,
+    },
+    title = {
+        initial = {}
+    },
+    caption = {
+        initial = 代码,
+    },
+}
+
+\newcounter{codeblock}[section]
+\renewcommand{\thecodeblock}{\arabic{section}.\arabic{codeblock}}
+
+\newenvironmentx{codeblock}[1][1={}]{%
+    \kvsetkeys{deanwr@codeblocksettings@@stored}{
+        color = \deanwr@codeblocksettings@color,
+        caption = \deanwr@codeblocksettings@caption,
+    }
+    \if\relax#1\relax\else
+        \kvsetkeys{deanwr@codeblocksettings}{#1}
+    \fi
+    \refstepcounter{codeblock}
+    \deanwr@codebox{%
+        \deanwr@codeblocksettings@caption~\thecodeblock~~%
+        \if\relax\deanwr@codeblocksettings@title\relax\else%
+            (\deanwr@codeblocksettings@title)
+        \fi
+    }{\deanwr@codeblocksettings@color}
+}{
+    \enddeanwr@codebox
+    \kvsetkeys{deanwr@codeblocksettings}{
+        color = \deanwr@codeblocksettings@@stored@color,
+        title = {},
+        caption = \deanwr@codeblocksettings@@stored@caption,
+    }
+}
+
+\newenvironmentx{codeblock*}[1][1={}]{%
+    \kvsetkeys{deanwr@codeblocksettings}{#1}
+    \deanwr@codebox{%
+        \if\relax\deanwr@codeblocksettings@title\relax\else%
+            \deanwr@codeblocksettings@caption~~%
+            (\deanwr@codeblocksettings@title)
+        \fi
+    }{\deanwr@codeblocksettings@color}
+}{
+    \enddeanwr@codebox
+}
+
+
+%% Color boxes
+
+% \begin{deanbox}[title][color-name]
+%   <contents> 
+% \end{deanbox}
+\newenvironmentx{deanbox}[2][1={}, 2=\infocolorname]{
+    \def\deanwr@@boxtitle{#1}
+    \ifx\deanwr@@boxtitle\@empty
+        \tcolorbox[
+            enhanced, 
+            colframe=#2-base, colback=#2-lighten-5, 
+            fonttitle=\normalfont\sffamily, 
+            boxrule=0.5pt,
+            arc=0mm, sharp corners=all, 
+            left=1ex, right=1ex, 
+            breakable
+        ]
+    \else
+        \tcolorbox[
+            enhanced, 
+            adjusted title=#1, 
+            colframe=#2-base, colback=#2-lighten-5, 
+            fonttitle=\normalfont\sffamily, 
+            boxrule=0.5pt, toprule=0mm, 
+            arc=0mm, sharp corners=all, 
+            left=1ex, right=1ex, 
+            breakable
+        ]
+    \fi
+}{
+    \endtcolorbox
+}
+
+% \inlbox[color-name=accent]{contents}
+\newtcbox{\inlbox}[1][\accentcolorname]{on line,
+    arc=0pt, outer arc=0pt, 
+    colback=#1-lighten-5, colframe=#1-base,
+    boxsep=0pt, left=1pt, right=1pt, top=2pt, bottom=2pt,
+    boxrule=0pt, bottomrule=0.5pt,
+    breakable
+}
+
+\newcommand{\code}[1]{\inlbox{\texttt{#1}}}
+
+
+%% enumitem settings 
+\setlist[enumerate,itemize,0]{
+    itemsep = 0pt,
+    leftmargin = *,
+}
+
+\setlist[enumerate, 1]{
+    labelindent = 2em,
+    label = \arabic*.,
+}
+\setlist[enumerate,2]{
+    labelindent = 0ex,
+    label = (\arabic*)
+}
+\setlist[enumerate,3]{
+    labelindent = 0ex,
+    label = (\roman*)
+}
+
+\setlist[itemize,1]{
+    labelindent = 2em,
+    label = {\small$\bullet$}
+}
+
+\setlist[itemize,2]{
+    labelindent = 1ex,
+    label = $\circ$
+}
+
+\setlist[itemize,3]{
+    labelindent = 1ex,
+    label = {\tiny$\blacksquare$}
+}
+
+\setlist[description]{
+    itemsep = 0pt,
+    labelindent = 2em,
+    font = \normalfont\sffamily
+}

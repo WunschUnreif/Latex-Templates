@@ -1,0 +1,5 @@
+\begin{codeblock}[title = Hello World in Python, color = pink]
+\begin{minted}[autogobble]{python}
+    print("Hello, World!")
+\end{minted}
+\end{codeblock}
