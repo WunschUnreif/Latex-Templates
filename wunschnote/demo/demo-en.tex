@@ -15,6 +15,9 @@
     \subsubsection{subsubsection}
     \paragraph{paragraph} These are title styles
 
+    \paragraph{Another paragraph}
+    \lipsum[2]
+
     \subsection{Theorems}
 
     \begin{theorem}[named theorem]
@@ -65,10 +68,62 @@
 
     \begin{wunschbox}[Setting box colors][\successcolor]
         The second optional argument controls the color of the box. You should only pass the color series name such as \verb|green| or use the theme color such as \verb|\successcolorname|. By default, the box frame and the title bar use the base color and the box background uses the \verb|-lighten-5| variation.
+        \par 
+        Paragraph break inside boxes.
     \end{wunschbox}
 
     There is also an inline version of boxes using command \code{\textbackslash inlbox}. Since inline boxes are preferable to display short codes, we also provide the command \code{\textbackslash code} for such purposes, which is equivalent to a \code{\textbackslash texttt} inside a \code{\textbackslash inlbox}.
 
-
+    \section{Lorem Ipsum}
     \lipsum
+
+    \section{Enum Item}
+    An \code{enumerate}:
+    \begin{enumerate}
+        \item enum 1
+        \item enum 2
+        \item enum paragraph \lipsum[2]
+    \end{enumerate}
+    Large numbers:
+    \begin{enumerate}[start=9]
+        \item enum 1
+        \item enum 2
+        \item enum paragraph \lipsum[2]
+    \end{enumerate}
+
+    A nested \code{enumerate}:
+    \begin{enumerate}
+        \item First item.
+        \item Nested 
+        \begin{enumerate}
+            \item Item 2.1
+            \item Item 2.2
+            \item Level 3:
+            \begin{enumerate}
+                \item Item 2.3.1
+                \item Item 2.3.2
+            \end{enumerate}
+        \end{enumerate}
+    \end{enumerate}
+
+    An \code{description}:
+    \begin{description}
+        \item[First] first item.
+        \item[Second] second item.
+    \end{description}
+
+    An \code{itemize}:
+    \begin{itemize}
+        \item First item.
+        \item Nested 
+        \begin{itemize}
+            \item Item 2.1
+            \item Item 2.2
+            \item Level 3:
+            \begin{itemize}
+                \item Item 2.3.1
+                \item Item 2.3.2
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
 \end{document}

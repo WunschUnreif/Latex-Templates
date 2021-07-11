@@ -22,25 +22,32 @@
 
 
 %% Package loading
-\RequirePackage{euler}
 \RequirePackage[T1]{fontenc}
+\RequirePackage{euler}
 \RequirePackage[nomath]{libertinus}
 \RequirePackage[scale=0.8]{FiraMono}
+
 \RequirePackage{amsmath}
 \RequirePackage{amsthm}
+\RequirePackage{amssymb}
+\RequirePackage{amsfonts}
 \RequirePackage{bm}
 \RequirePackage{bbm}
+
 \RequirePackage{indentfirst}
 \RequirePackage{lineno}
 \RequirePackage{fancybox}
+\RequirePackage{tcolorbox}
+\RequirePackage{fancyvrb}
+
 \RequirePackage{titlesec}
 \RequirePackage{xhfill}
 \RequirePackage{geometry}
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
+\RequirePackage[shortlabels]{enumitem}
+
 \RequirePackage{xargs}
-\RequirePackage{tcolorbox}
-\RequirePackage{fancyvrb}
 \RequirePackage{minted}
 
 
@@ -49,7 +56,7 @@
 
 %% Page dimensions
 \setlength{\parindent}{0ex}
-\setlength{\parskip}{1.5ex}
+\setlength{\parskip}{.5em}
 
 \geometry{%
     b5paper,
@@ -108,7 +115,7 @@
         left=2ex, right=2ex
     ]
         {%
-            \scshape \wunschnote@config@course \hfill%
+            \sffamily\scshape \wunschnote@config@course \hfill%
             \if\relax\wunschnote@config@lecture\relax\else%
                 Lecture~\wunschnote@config@lecture%
             \fi%
@@ -142,7 +149,7 @@
 ]
 
 \titleformat{\subsection}[hang]{%
-    \large\normalfont\sffamily
+    \large\sffamily
 }{%
     \thesubsection
 }{.5em}{%
@@ -169,6 +176,8 @@
     \normalsize\normalfont\sffamily\bfseries
 }{}{.5em}{}[]
 
+\titlespacing*{\paragraph}{0pt}{0pt}{1em}
+
 
 %% Theorem styles and environments
 % thmbox{color-name}{title}
@@ -182,7 +191,8 @@
         fonttitle=\normalfont\sffamily, 
         boxrule=0.3pt, arc=7pt, 
         left=7pt, right=7pt, 
-        breakable
+        breakable,
+        parbox=false,
     }
     \tcolorbox
 }{
@@ -251,7 +261,8 @@
             fonttitle=\normalfont\sffamily, 
             boxrule=0.3pt,arc=7pt, 
             left=7pt, right=7pt, 
-            breakable
+            breakable,
+            parbox=false,
         ]
     \else
         \tcolorbox[
@@ -261,7 +272,8 @@
             fonttitle=\normalfont\sffamily, 
             boxrule=0.3pt, arc=7pt, 
             left=7pt, right=7pt, 
-            breakable
+            breakable,
+            parbox=false,
         ]
     \fi
 }{
@@ -281,3 +293,44 @@
 }
 
 \newcommand{\code}[1]{\inlbox{\texttt{#1}}}
+
+
+%% enumitem settings 
+\setlist[enumerate,itemize,0]{
+    itemsep = 0pt,
+    leftmargin = *,
+}
+
+\setlist[enumerate, 1]{
+    labelindent = 1em,
+    label = \arabic*.,
+}
+\setlist[enumerate,2]{
+    labelindent = 0ex,
+    label = (\arabic*)
+}
+\setlist[enumerate,3]{
+    labelindent = 0ex,
+    label = (\roman*)
+}
+
+\setlist[itemize,1]{
+    labelindent = 1em,
+    label = {\small$\bullet$}
+}
+
+\setlist[itemize,2]{
+    labelindent = 1ex,
+    label = $\circ$
+}
+
+\setlist[itemize,3]{
+    labelindent = 1ex,
+    label = {\tiny$\blacksquare$}
+}
+
+\setlist[description]{
+    itemsep = 0pt,
+    labelindent = 1em,
+    font = \sffamily
+}
