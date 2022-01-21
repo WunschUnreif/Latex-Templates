@@ -28,6 +28,17 @@
 \newcommand{\bbF}{\mathbb{F}}
 \newcommand{\bbN}{\mathbb{N}}
 \newcommand{\I}{\mathrm{i}}
-\newcommandx{\seq}[2][1=x, 2=n]{#1_1, \ldots, #1_#2}
+\newcommandx{\seq}[2][1=x, 2=n]{{#1}_1, \ldots, {#1}_{#2}}
+\newcommandx{\seqop}[3][1=x, 2=+, 3=n]{{#1}_1 {#2} \cdots {#2} {#1}_{#3}}
 \newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\nullspace}{\mathop{\text{null}}}
+\newcommand{\rangespace}{\mathop{\text{range}}}
+\newcommand{\inverse}[1]{{#1}^{-1}}
+\newcommand{\transpose}[1]{{#1}^{\rm t}}
+\newcommand{\absval}[1]{\left\vert{#1}\right\vert}
+\newcommand{\norm}[1]{\left\Vert{#1}\right\Vert}
+\newcommand{\innerprod}[2]{\left\langle{#1}, {#2}\right\rangle}
 
+\let\oldPr\Pr 
+\renewcommand{\Pr}[1][{}]{\oldPr\left[{#1}\right]}
+\newcommand{\E}[1][{}]{E\left[{#1}\right]}

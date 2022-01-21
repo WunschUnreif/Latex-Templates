@@ -1,4 +1,4 @@
-%% wunschnote-en.ltx
+%% plainnote-en.ltx
 %% Copyright 2021 WunschUnreif
 %
 % This work may be distributed and/or modified under the
@@ -13,12 +13,12 @@
 % 
 % The Current Maintainer of this work is WunschUnreif.
 %
-% This work consists of the files wunschnote-en.ltx
+% This work consists of the files plainnote-en.ltx
 
 
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessKeyvalOptions*
-\LoadClass[12pt]{article}
+\LoadClass[11pt]{article}
 
 
 %% Package loading
@@ -28,6 +28,7 @@
 \RequirePackage[scale=0.8]{FiraMono}
 
 \RequirePackage{amsmath}
+\RequirePackage{amsthm}
 \RequirePackage{amsthm}
 \RequirePackage{amssymb}
 \RequirePackage{amsfonts}
@@ -58,22 +59,20 @@
 \setlength{\parindent}{0ex}
 \setlength{\parskip}{.5em}
 
-\linespread{1.1}
-
 \geometry{%
-    a4paper,
-    hmargin=0.8in,
-    top=0.8in,
+    b5paper,
+    hmargin=0.5in,
+    top=0.5in,
     headsep=0.2in,
-    bottom=1.2in
+    bottom=1in
 }
 
 \pagestyle{plain}
 
 
 %% Document config database
-\kv@define@key{wunschnote}{config}{\kvsetkeys{wunschnote@config}{#1}}
-\kvdb@create{wunschnote@config}{
+\kv@define@key{plainnote}{config}{\kvsetkeys{plainnote@config}{#1}}
+\kvdb@create{plainnote@config}{
     course = {
         initial = Course,
     },
@@ -94,11 +93,11 @@
     },
 }
 
-\newcommand{\noteconfig}[1]{\kvsetkeys{wunschnote@config}{#1}}
+\newcommand{\noteconfig}[1]{\kvsetkeys{plainnote@config}{#1}}
 
 
 %% Linenumbers
-\ifwunschnote@lineno@on
+\ifplainnote@lineno@on
 \AtBeginDocument{
     \linenumbers
 }
@@ -113,27 +112,27 @@
     \begin{tcolorbox}[
         enhanced, 
         colframe=black, colback=white,  
-        boxrule=1pt, arc=7pt, 
+        boxrule=1pt, arc=0pt, 
         left=2ex, right=2ex
     ]
         {%
-            \sffamily\scshape \wunschnote@config@course \hfill%
-            \if\relax\wunschnote@config@lecture\relax\else%
-                Lecture~\wunschnote@config@lecture%
+            \sffamily\scshape \plainnote@config@course \hfill%
+            \if\relax\plainnote@config@lecture\relax\else%
+                Lecture~\plainnote@config@lecture%
             \fi%
         }%
         \par
         \begin{center}
-            \Large\sffamily\wunschnote@config@title
+            \Large\sffamily\plainnote@config@title
         \end{center}
         \par 
-        {\sffamily\scshape Scribe:}~\wunschnote@config@author
+        {\sffamily\scshape Scribe:}~\plainnote@config@author
         \hfill 
-        {\sffamily\scshape Last modified:}~\wunschnote@config@date
+        {\sffamily\scshape Last modified:}~\plainnote@config@date
     \end{tcolorbox}
     \vspace{\parskip}
 
-    \ifwunschnote@lineno@on%
+    \ifplainnote@lineno@on%
         \linenumbers%
     \fi
 }
@@ -145,7 +144,7 @@
 }{.5em}{%
     \nolinenumbers
 }[%
-    \ifwunschnote@lineno@on%
+    \ifplainnote@lineno@on%
         \linenumbers%
     \fi
 ]
@@ -157,7 +156,7 @@
 }{.5em}{%
     \nolinenumbers
 }[%
-    \ifwunschnote@lineno@on%
+    \ifplainnote@lineno@on%
         \linenumbers%
     \fi
 ]
@@ -169,7 +168,7 @@
 }{.5em}{%
     \nolinenumbers
 }[%
-    \ifwunschnote@lineno@on%
+    \ifplainnote@lineno@on%
         \linenumbers%
     \fi
 ]
@@ -182,70 +181,26 @@
 
 
 %% Theorem styles and environments
-% thmbox{color-name}{title}
-\newenvironment{wunschnote@thmbox}[2]{
-    \nolinenumbers
-    \begingroup
-    \tcbset{
-        enhanced, 
-        adjusted title={#2}, 
-        colframe=#1-base, colback=white, 
-        fonttitle=\normalfont\sffamily, 
-        boxrule=0.5pt, arc=7pt, 
-        left=7pt, right=7pt, 
-        breakable,
-        parbox=false,
-    }
-    \tcolorbox
-}{
-    \endtcolorbox
-    \endgroup
-    \ifwunschnote@lineno@on%
-        \linenumbers%
-    \fi
-}
 
-% create a theorem with grammar
-%   \createthm
-%       [<counter reset>]
-%       {<name>}{<display name>}
-%       {color name}
-%       [use counter]
-\newcommandx{\createthm}[5][1=section, 5={}]{
-    \@namedef{wunschnote@thm#2@usecounter}{#5}
-    \@namedef{wunschnote@thm#2@countername}{#2}
-    \if\relax\@nameuse{wunschnote@thm#2@usecounter}\relax
-        \newcounter{#2}[#1]
-        \@namedef{the#2}{\arabic{#1}.\arabic{#2}}
-    \else 
-        \@namedef{wunschnote@thm#2@countername}{#5}
-    \fi
-    \newenvironment{#2}[1][]{
-        \expandafter\refstepcounter{\@nameuse{wunschnote@thm#2@countername}}
-        \wunschnote@thmbox{#4}{#3 \expandafter\@nameuse{the\@nameuse{wunschnote@thm#2@countername}}
-            \def\wunschnote@@thmname{##1}
-            \if\relax\wunschnote@@thmname\relax\else(##1)\fi
-        }
-    }{
-        \endwunschnote@thmbox
-    }
-    \newenvironment{#2*}[1][]{
-        \wunschnote@thmbox{#4}{#3
-            \def\wunschnote@@thmname{##1}
-            \if\relax\wunschnote@@thmname\relax\else(##1)\fi
-        }
-    }{
-        \endwunschnote@thmbox
-    }
-}
+\newtheoremstyle{plainnotethm}%
+{}{}%
+{\normalfont}%
+{0pt}%
+{\sffamily\bfseries}%
+{.}%
+{ }%
+{\thmname{#1}\thmnumber{ #2}\thmnote{ {\normalfont(#3)}}}
 
-\createthm{theorem}{Theorem}{\primarycolor}
-\createthm{lemma}{Lemma}{\primarycolor}[theorem]
-\createthm{corollary}{Corollary}{\primarycolor}[theorem]
+% \theoremstyle{plainnotethm}
 
-\createthm{definition}{Definition}{\secondarycolor}[theorem]
-\createthm{example}{Example}{\infocolor}[theorem]
-\createthm{remark}{Remark}{\accentcolor}[theorem]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
 
 
 %% Color boxes
@@ -262,7 +217,7 @@
             colframe=#2-base, colback=#2-lighten-5, 
             fonttitle=\normalfont\sffamily, 
             boxrule=0.3pt,arc=7pt, 
-            left=4pt, right=4pt, 
+            left=7pt, right=7pt, 
             breakable,
             parbox=false,
         ]
@@ -273,7 +228,7 @@
             colframe=#2-base, colback=#2-lighten-5, 
             fonttitle=\normalfont\sffamily, 
             boxrule=0.3pt, arc=7pt, 
-            left=4pt, right=4pt, 
+            left=7pt, right=7pt, 
             breakable,
             parbox=false,
         ]
@@ -295,7 +250,7 @@
 }
 
 \newcommand{\code}[1]{\inlbox{\texttt{#1}}}
-\renewcommand{\emph}[1]{\inlbox{\textit{#1}}}
+
 
 %% enumitem settings 
 \setlist[enumerate,itemize,0]{

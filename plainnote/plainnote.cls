@@ -1,4 +1,4 @@
-%% wunschnote.cls
+%% plainnote.cls
 %% Copyright 2021 WunschUnreif
 %
 % This work may be distributed and/or modified under the
@@ -13,28 +13,28 @@
 % 
 % The Current Maintainer of this work is WunschUnreif.
 %
-% This work consists of the files wunschnote.cls
+% This work consists of the files plainnote.cls
 
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{wunschnote}[2021/07/09 A note template.]
+\ProvidesClass{plainnote}[2021/07/12 A plain note template.]
 
 
 %% Load packages for key-value option handling and colors
 \RequirePackage{kvoptions}
 \RequirePackage{kvdb}
-\RequirePackage{apple-color}
+\RequirePackage{material-color}
 
 
 \SetupKeyvalOptions{
-    family=wunschnote,
-    prefix=wunschnote@,
+    family=plainnote,
+    prefix=plainnote@,
     setkeys=\kvsetkeys
 }
 
 
 %% Declare class options
-\kvdb@create{wunschnote}{
+\kvdb@create{plainnote}{
     lang = {
         choices = {
             en,
@@ -63,7 +63,7 @@
     }
 }
 
-\newcommand{\wunschset}[1]{\kvsetkeys{wunschnote}{#1}}
+\newcommand{\wunschset}[1]{\kvsetkeys{plainnote}{#1}}
 
 
 %% Color theme
@@ -75,31 +75,28 @@
 \newcommand{\successcolor}{green}
 \newcommand{\infocolor}{teal}
 
-% Useful commands
-\newcommand{\divider}{{\color{gray-base}\rule[0.5em]{\textwidth}{0.5pt}}
-}
 
 % Input language-specified template file
 \DeclareDefaultOption{}
 \ProcessKeyvalOptions*
 
-\ifwunschnote@lang@en
-    \InputIfFileExists{wunschnote-en.ltx}{}{
+\ifplainnote@lang@en
+    \InputIfFileExists{plainnote-en.ltx}{}{
         \deanwr@error{I cannot find the English template file.}
     }
 \fi
 
-\ifwunschnote@lang@zh
-    \InputIfFileExists{wunschnote-zh.ltx}{}{
+\ifplainnote@lang@zh
+    \InputIfFileExists{plainnote-zh.ltx}{}{
         \deanwr@error{I cannot find the Chinese template file.}
     }
 \fi
 
 
 %% Bibliography
-\ifwunschnote@bib@on
+\ifplainnote@bib@on
 \AtEndDocument{
-    \expandafter\bibliographystyle{\wunschnote@bibstyle}
-    \bibliography{\wunschnote@config@bibdb}
+    \expandafter\bibliographystyle{\plainnote@bibstyle}
+    \bibliography{\plainnote@config@bibdb}
 }
 \fi
