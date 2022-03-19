@@ -1,0 +1,64 @@
+\RequirePackage{calc}
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+
+
+%% Options %%
+
+\def\wpre@outer@options{%
+    framelogo = {
+        initial = assets/biglogo-red.png
+    },
+}
+
+
+%%% no navigations %%
+
+\setbeamertemplate{navigation symbols}{}
+
+
+%%% Frame title %%%
+
+\newlength{\wpre@textwidth}
+\newlength{\wpre@frametitleht}
+\setbeamertemplate{frametitle}{%
+    \setlength{\wpre@textwidth}{%
+        \paperwidth - 0.75\beamer@leftmargin%
+                    - 0.75\beamer@rightmargin}%
+    \setlength{\wpre@frametitleht}{\paperheight / 8}%
+    \begin{beamercolorbox}[sep=0cm,left,wd=\paperwidth, ht=\wpre@frametitleht, dp=0pt]{frametitle}%
+        \begin{minipage}[b][\wpre@frametitleht]{0.75\beamer@leftmargin}
+            \vfill%
+            \tikz{
+                \draw[fill=sjtu-red,line width=0pt] (0em, 1ex) -- (0.3em, 1ex) -- (0.8em, 0ex) -- (0.3em, -1ex) -- (0em, -1ex) -- cycle;
+            }%
+            \strut%
+            \vfill\vspace*{0mm}%
+        \end{minipage}%
+        \begin{minipage}[b][\wpre@frametitleht]{0.7\wpre@textwidth}%
+            \vfill%
+            \insertframetitle%
+            \vfill\vspace*{0.2\baselineskip}%
+        \end{minipage}%
+        \begin{minipage}[b][\wpre@frametitleht]{0.3\wpre@textwidth}%
+            \vfill%
+            \hfill%
+            \if\relax\wpre@framelogo\relax\else{%
+                \includegraphics[height=1.3\baselineskip]{\wpre@framelogo}%
+            }\fi%
+            \vfill\vspace*{0mm}%
+        \end{minipage}%
+    \end{beamercolorbox}%
+}
+
+
+%%% Foot lines %%%
+\setbeamertemplate{footline}{%
+    \begin{beamercolorbox}[sep=1.5ex, wd=\paperwidth]{footline}%
+        \usebeamerfont{page number in head/foot}%
+        \usebeamertemplate*{frame footer}%
+        \hfill%
+        \insertframenumber%
+        \hspace*{0.5ex}%
+    \end{beamercolorbox}
+}

@@ -1,0 +1,445 @@
+\RequirePackage{keyval}
+\RequirePackage{graphicx}
+\RequirePackage{calc}
+\RequirePackage{etoolbox}
+\RequirePackage{mathabx}
+\RequirePackage{fontawesome5}
+\RequirePackage{ifthen}
+\RequirePackage{tcolorbox}
+
+\tcbuselibrary{skins}
+
+
+%% Options %%
+
+\def\wpre@inner@options{%
+    series  = {},
+    credits = {},
+    titlelogo = {
+        initial = assets/biglogo-red.png
+    },
+%
+    showtocsubsections = {
+        choices = {
+            true, false
+        },
+        initial = false,
+        default = true,
+    },
+%
+    showsubsectionpage = {
+        choices = {
+            true, false
+        },
+        initial = false,
+        default = true,
+    },
+%
+    parskip = {
+        initial = 0.5\baselineskip
+    }
+}
+
+\newcommand{\series}[1]{\wpreset{series={#1}}}
+\newcommand{\credits}[1]{\wpreset{credits={#1}}}
+
+
+%%% Lengths %%%
+\AtBeginDocument{%
+    \setlength{\parskip}{\wpre@parskip}%
+}
+
+% For environments overriding parskips
+\newcommand{\applyparskip}{\setlength{\parskip}{\wpre@parskip}}
+
+
+%%% Title page %%%
+
+\setbeamertemplate{title page}{%
+    \begin{minipage}[t][\paperheight]{\textwidth}%
+        \usebeamertemplate{title page header}%
+        \begin{minipage}[b][\paperheight-8em-2\lineskip]{\textwidth}
+            \centering%
+            \setlength{\parskip}{\wpre@parskip}%
+            \usebeamercolor[fg]{structure}%
+            \usebeamerfont{title}%
+            \ifx\inserttitle\@empty\else{\inserttitle}\fi%
+            \par%
+            \usebeamercolor[fg]{structure}%
+            \usebeamerfont{subtitle}%
+            \ifx\insertsubtitle\@empty\else{\insertsubtitle}\fi%
+            \par%
+            \usebeamercolor[fg]{normal text}%
+            \vspace{\baselineskip}%
+            \usebeamerfont{author}%
+            \ifx\insertshortauthor\@empty\else{\insertauthor}\fi%
+            \par%
+            \usebeamerfont{institute}%
+            \ifx\insertinstitute\@empty\else{\insertinstitute}\fi%
+            \par%
+            \usebeamerfont{date}%
+            \ifx\insertdate\@empty\else{\insertdate}\fi%
+            \par%
+            \vspace*{0.1\paperheight}%
+        \end{minipage}%
+        \par%
+        \usebeamertemplate{title page footer}%
+    \end{minipage}%
+}
+
+\def\maketitle{%
+    \ifbeamer@inframe
+        \titlepage 
+    \else 
+        \frame[plain]{\titlepage}
+    \fi
+}
+
+\def\titlepage{%
+    \usebeamertemplate{title page}
+}
+
+\setbeamertemplate{title page header}{%
+    \begin{minipage}[t][4em]{\textwidth}%
+        \vspace*{1em}
+        \begin{minipage}[c][3em]{0.7\textwidth}%
+            \wpre@series\;%
+        \end{minipage}%
+        \hfill%
+        \if\relax\wpre@titlelogo\relax\else{%
+            \begin{minipage}[c][3em]{0.3\textwidth}%
+                \hfill%
+                \includegraphics[height=3em]{\wpre@titlelogo}%
+            \end{minipage}%
+        }\fi%
+    \end{minipage}%
+    \par%
+}
+
+\setbeamertemplate{title page footer}{%
+    \begin{minipage}[c][3em]{\textwidth}%
+        \wpre@credits\;%
+    \end{minipage}%
+    \vspace*{1em}%
+}
+
+
+%%% Section pages, section in toc %%%
+\AtBeginSection{%
+    \begin{frame}[plain]%
+        \sectionpage%
+    \end{frame}%
+}
+
+\newlength{\wpre@sectiontitleht}
+\setbeamertemplate{section page}{%
+    \setlength{\wpre@sectiontitleht}{0.15\paperheight}
+    \begin{minipage}[b][\paperheight]{\textwidth}%
+        \usebeamerfont{section title}%
+        \usebeamercolor[fg]{section title}%
+        \vfill\vfill%
+        \begin{beamercolorbox}[sep=0cm,left,wd=\paperwidth, ht=\wpre@sectiontitleht,dp=0pt]{section title}%
+            \begin{minipage}[b][\wpre@sectiontitleht]{0.75\beamer@leftmargin}
+                \;\vfill%
+                \tikz{
+                    \draw[fill=sjtu-red,line width=0pt] (0em, 1ex) -- (0.3em, 1ex) -- (0.8em, 0ex) -- (0.3em, -1ex) -- (0em, -1ex) -- cycle;
+                }
+                \vfill\vspace*{1ex}%
+            \end{minipage}%
+            \begin{minipage}[b][\wpre@sectiontitleht]{\textwidth}%
+                \vfill%
+                \insertsection
+                \vfill\vspace*{0.1\baselineskip}%
+            \end{minipage}%
+        \end{beamercolorbox}%
+        \vfill\vspace*{0mm}%
+    \end{minipage}%
+}
+
+\setbeamertemplate{section in toc}{%
+    \begin{tabular}{p{0.5mm}l}%
+        \faAngleRight &%
+        \inserttocsection%
+    \end{tabular}%
+}
+
+
+%%% Sub section pages, sub section in toc %%%
+
+\AtBeginSubsection{%
+    \ifthenelse{%
+        \equal{\wpre@showsubsectionpage}{true}%
+    }{%
+        \begin{frame}[plain]%
+            \subsectionpage%
+        \end{frame}%
+    }{}%
+}
+
+\setbeamertemplate{subsection page}{%
+    \setlength{\wpre@sectiontitleht}{0.15\paperheight}
+    \begin{minipage}[b][\paperheight]{\textwidth}%
+        \usebeamerfont{section title}%
+        \usebeamercolor[fg]{section title}%
+        \vfill%
+        \begin{beamercolorbox}[sep=0cm,left,wd=\paperwidth, ht=\wpre@sectiontitleht,dp=0pt]{section title shaded}%
+            \begin{minipage}[b][\wpre@sectiontitleht]{0.75\beamer@leftmargin}
+                \;\vfill%
+                \tikz{
+                    \draw[fill=sjtu-red!45,draw=none] (0em, 1ex) -- (0.3em, 1ex) -- (0.8em, 0ex) -- (0.3em, -1ex) -- (0em, -1ex) -- cycle;
+                }
+                \vfill\vspace*{1ex}%
+            \end{minipage}%
+            \begin{minipage}[b][\wpre@sectiontitleht]{\textwidth}%
+                \vfill%
+                \insertsection
+                \vfill\vspace*{0.1\baselineskip}%
+            \end{minipage}%
+        \end{beamercolorbox}%
+        \vspace{1\baselineskip}%
+        \usebeamerfont{subsection title}%
+        \usebeamercolor[fg]{subsection title}%
+        \begin{beamercolorbox}[sep=0cm,left,wd=\paperwidth, ht=\wpre@sectiontitleht,dp=0pt]{subsection title}%
+            \begin{minipage}[b][\wpre@sectiontitleht]{0.75\beamer@leftmargin}%
+                \;
+            \end{minipage}%
+            \begin{minipage}[b][\wpre@sectiontitleht]{\textwidth}%
+                \centering%
+                \vfill%
+                \insertsubsection
+                \vfill\vspace*{0.1\baselineskip}%
+            \end{minipage}%
+        \end{beamercolorbox}%
+        \vfill\vspace*{0mm}%
+    \end{minipage}%
+}
+
+\setbeamertemplate{subsection in toc}{%
+    \ifthenelse{%
+        \equal{\wpre@showtocsubsections}{true}%
+    }{%
+        \begin{tabular}{p{0.5mm}p{0.5mm}l}%
+            &\faAngleRight &%
+            \inserttocsubsection%
+        \end{tabular}%
+    }{}%
+}
+
+
+%%% Bibliophy %%%
+\setbeamertemplate{bibliography item}{%
+    \faTag~~%
+}
+
+\setbeamertemplate{bibliography entry title}{ }
+\setbeamertemplate{bibliography entry location}{ }
+
+
+%%% Blocks %%%
+
+\newcommand{\drawblocksidebar}[1][block title]{
+    \path[draw=none, fill=#1.fg] (frame.south west) -- (frame.north west) arc (90:180:3pt) -- ([xshift=-3pt,yshift=3pt]frame.south west) arc (180:270:3pt);
+}
+
+\newcommand{\blockboxspecnotitle}[2]{%
+    \begin{tcolorbox}[
+        enhanced,%
+        boxrule=0pt, sharp corners,%
+        enlarge left by=3pt,%
+        enlarge right by=-3pt,%
+        colback={#2.bg},%
+        colbacktitle={#1.bg},%
+        coltitle={#1.fg},%
+        fonttitle={\usebeamerfont{#1}},%
+        frame hidden,%
+        top=2pt, bottom=2pt, right=1ex, left=1ex,%
+        toptitle=2pt,%
+        overlay = {\drawblocksidebar[#1]}%
+    ]%
+        \setlength{\parskip}{\wpre@parskip}%
+}
+\newcommand{\blockboxspectitled}[2]{%
+    \begin{tcolorbox}[
+        title={\insertblocktitle},%
+        enhanced,%
+        boxrule=0pt, sharp corners,%
+        enlarge left by=3pt,%
+        enlarge right by=-3pt,%
+        colback={#2.bg},%
+        colbacktitle={#1.bg},%
+        coltitle={#1.fg},%
+        fonttitle={\usebeamerfont{#1}},%
+        frame hidden,%
+        top=2pt, bottom=2pt, right=1ex, left=1ex,%
+        toptitle=2pt,%
+        overlay = {\drawblocksidebar[#1]}%
+    ]%
+        \setlength{\parskip}{\wpre@parskip}%
+}
+
+\setbeamertemplate{block begin}{%
+    \usebeamercolor{block title}%
+    \usebeamercolor{block body}%
+    \ifx\insertblocktitle\@empty%
+        \blockboxspecnotitle{block title}{block body}%
+    \else%
+        \blockboxspectitled{block title}{block body}%
+    \fi
+}
+
+\setbeamertemplate{block end}{%
+    \end{tcolorbox}\vspace*{0.5\parskip}%
+}
+
+\setbeamertemplate{block example begin}{%
+    \usebeamercolor{block title example}%
+    \usebeamercolor{block body example}%
+    \ifx\insertblocktitle\@empty%
+        \blockboxspecnotitle{block title example}{block body example}%
+    \else%
+        \blockboxspectitled{block title example}{block body example}%
+    \fi
+}
+
+\setbeamertemplate{block example end}{%
+    \end{tcolorbox}\vspace*{0.5\parskip}%
+}
+
+\setbeamertemplate{block alerted begin}{%
+    \usebeamercolor{block title alerted}%
+    \usebeamercolor{block body alerted}%
+    \ifx\insertblocktitle\@empty%
+        \blockboxspecnotitle{block title alerted}{block body alerted}%
+    \else%
+        \blockboxspectitled{block title alerted}{block body alerted}%
+    \fi
+}
+
+\setbeamertemplate{block alerted end}{%
+    \end{tcolorbox}\vspace*{0.5\parskip}%
+}
+
+
+%%% Theorems
+
+% Theorem styles 
+
+\newtheoremstyle{wprethm}%
+    {}{}%
+    {\normalfont}{}%
+    {%
+        \setbeamercolor{block title}{%
+            fg = sjtu-purple,%
+            bg = sjtu-purple!5%
+        }%
+        \setbeamercolor{block body}{%
+            fg = black,%
+            bg = sjtu-purple!5%
+        }%
+        \normalfont%
+    }{}{ }%
+    {\thmname{#1}\thmnumber{ #2}\thmname{ (#3)}}%
+
+\newtheoremstyle{wpredef}%
+    {}{}%
+    {\normalfont}{}%
+    {%
+        \setbeamercolor{block title}{%
+            fg = sjtu-blue,%
+            bg = sjtu-blue!5%
+        }%
+        \setbeamercolor{block body}{%
+            fg = black,%
+            bg = sjtu-blue!5%
+        }%
+        \normalfont%
+    }{}{ }%
+    {\thmname{#1}\thmnumber{ #2}\thmname{ (#3)}}%
+
+\newtheoremstyle{wpreexmp}%
+    {}{}%
+    {\normalfont}{}%
+    {%
+        \setbeamercolor{block title}{%
+            use = block title example,
+            fg = block title example.fg,%
+            bg = block title example.bg%
+        }%
+        \setbeamercolor{block body}{%
+            use = block body example,
+            fg = block body example.fg,%
+            bg = block body example.bg%
+        }%
+        \normalfont%
+    }{}{ }%
+    {\thmname{#1}\thmnumber{ #2}\thmname{ (#3)}}%
+
+% Theorem environments
+
+\theoremstyle{wpredef}
+\newtheorem*{wdefinition}{Definition}
+\newtheorem*{wremark}{Remark}
+
+\theoremstyle{wprethm}
+\newtheorem{wtheorem}[theorem]{Theorem}
+\newtheorem{wlemma}[theorem]{Lemma}
+\newtheorem{wproposition}[theorem]{Proposition}
+\newtheorem{wcorollary}[theorem]{Corollary}
+\newtheorem{wfact}[theorem]{Fact}
+
+\theoremstyle{wpreexmp}
+\newtheorem*{wexample}{Example}
+
+% Theorem templates
+
+\setbeamertemplate{theorem begin}{%
+    \inserttheoremheadfont\normalfont%
+    \begin{\inserttheoremblockenv}{%
+        \inserttheoremheadfont%
+        \inserttheoremname
+        \inserttheoremnumber
+        \ifx\inserttheoremaddition\@empty\else\hfill[\inserttheoremaddition]\fi%
+        \inserttheorempunctuation
+    }%
+}
+
+\setbeamertemplate{theorem end}{\end{\inserttheoremblockenv}}
+
+% Proof
+
+\setbeamertemplate{proof begin}{\structure{\emph{\insertproofname}}\ }
+\setbeamertemplate{proof end}{}
+
+
+%%% Standout frames %%%
+
+\providebool{wpre@standout}
+\define@key{beamerframe}{standout}[true]{
+    \booltrue{wpre@standout}
+    \begingroup
+        \setkeys{beamerframe}{c}
+        \setkeys{beamerframe}{noframenumbering}
+        \setbeamercolor{background canvas}{
+            bg = sjtu-red,
+            fg = white
+        }
+        \usebeamercolor[bg]{text}%
+}
+
+\apptocmd{\beamer@reseteecodes}{
+    \ifbool{wpre@standout}{
+        \endgroup
+        \boolfalse{wpre@standout}
+    }{}
+}{}{}
+
+
+%%% Itemize symbols %%%
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{$\circ$}
+\setbeamertemplate{itemize subsubitem}{$\ast$}
+
+
+%%% Horizontal rules %%%
+\let\wpre@hrulefill\hrulefill
+\renewcommand{\hrulefill}{{\color{sjtu-gray!80!black}\wpre@hrulefill}}

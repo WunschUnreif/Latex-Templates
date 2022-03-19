@@ -1,0 +1,36 @@
+\RequirePackage{kvdb}
+\RequirePackage{kvoptions}
+\RequirePackage{etoolbox}
+
+\newcommand{\wpre@optionsloaded}{\relax}
+
+\newcommand{\wpre@atoptionsloaded}[1]{
+    \appto\wpre@optionsloaded{#1}
+}
+
+\useinnertheme{wpre}
+\useoutertheme{wpre}
+\usecolortheme{wpre}
+\usefonttheme{wpre}
+\usefonttheme{professionalfonts}
+
+
+
+\edef\wpre@alloptions{%
+    \wpre@outer@options%
+    \wpre@inner@options%
+}
+\kvdb@create{wpre}\wpre@alloptions
+
+
+\newcommand{\wpreset}[1]{\kvsetkeys{wpre}{#1}}
+
+
+\SetupKeyvalOptions{
+    family=wpre,
+    prefix=wpre@,
+    setkeys=\kvsetkeys
+}
+\ProcessKeyvalOptions*
+
+\wpre@optionsloaded
