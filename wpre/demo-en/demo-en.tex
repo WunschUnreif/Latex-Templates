@@ -1,0 +1,307 @@
+\documentclass[no-math, aspectratio=1610, 10pt]{beamer}
+\usetheme{wpre}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathabx}
+\usepackage{verbatim}
+\usepackage{expl3}
+\usepackage{lipsum}
+
+
+\title{Beamer theme \texttt{wpre}}
+\subtitle{A quick tour}
+\series{Hello, \texttt{wpre}!}
+\credits{Thanks IPADS, thier slides theme inspired this a lot.}
+\author{WunschUnreif}
+\institute{Basics, SJTU}
+\date{\today}
+
+\begin{document}
+    \maketitle
+
+    \begin{frame}{Contents}
+        \tableofcontents
+    \end{frame}
+
+    \section{Theme Options}
+
+    \begin{frame}[fragile]
+        \frametitle{Passing options to \texttt{wpre}}
+        You can pass options when loading this beamer theme in your preamble:
+        \begin{verbatim}
+    \usetheme[key = val, ...]{wpre}
+        \end{verbatim}
+        Alternatively, options can be modified in your document using the macro 
+        \begin{verbatim}
+    \wpreset{key = val, ...}
+        \end{verbatim}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Available options}
+    
+        Metadata:
+        \begin{description}
+            \item[\texttt{series}] Series name of your presentation, course name for example.
+            \item[\texttt{credits}] Credits shown at the bottom on the title page. 
+        \end{description}
+
+        Behavior control:
+        \begin{description}
+            \item[\texttt{showtocsubsection}] Controls whether subsections are shown in the table of contents. Initially \texttt{false}. Options are \texttt{true} and \texttt{false}.
+            \item[\texttt{showsubsectionpage}] Controls whether a title page is added at the beginning of each subsection. Initially \texttt{false}. Options are \texttt{true} and \texttt{false}.
+        \end{description}
+    
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Available options (cont'd)}
+
+        Logo:
+        \begin{description}
+            \item[\texttt{titlelogo}] Path to the logo image shown on the title page. Set to empty to disable.
+            \item[\texttt{framelogo}] Path to the logo image used for frame titles. Set to empty to disable. 
+        \end{description}
+    
+        Fonts:
+        \begin{description}
+            \item[\texttt{font}] Font family to use for main text. Options are \texttt{cmbr} (Cambridge Bright), \texttt{beamer} (the default family), and \texttt{harmony-os} (HarmonyOS Sans). Initially \texttt{cmbr}. Choose \texttt{harmony-os} if you are writting in chinese.
+        \end{description}
+    \end{frame}
+
+    \section{Title Page and Section Pages}
+
+    \begin{frame}[fragile]{How to make the title page?}
+        \framesubtitle{Use \texttt{maketitle}}
+        Two ways:
+        \begin{enumerate}
+            \item Use \verb|\maketitle| directly. (recommended)
+            \item Wrap \verb|\titlepage| inside a frame with options \texttt{plain, standout}.
+            \begin{enumerate}
+                \item sub item
+                \begin{enumerate}
+                    \item sub sub item
+                \end{enumerate}
+            \end{enumerate}
+        \end{enumerate}
+
+        If you don't like the standout title page, it is also feasible to put the \verb|\titlepage| in a \texttt{plain} frame. Remember to change the logo accordingly.
+    \end{frame}
+
+    \begin{frame}[fragile]{What's on the title page}
+        There are several elements displayed on the title page:
+        \begin{itemize}
+            \item Title, set with \verb|\title|.
+            \item Subtitle, set with \verb|\subtitle|.
+            \item Author, set with \verb|\author|.
+            \item Institute, set with \verb|\institute|.
+            \item Date, set with \verb|\date|.
+            \item Series, displayed in the top left corner, set with \verb|\series|.
+            \item Credits, displayed at the bottom, set with \verb|\credits|.
+            \item Logo, set with \verb|\wpreset{titlelogo = <path>}|.
+            \begin{itemize}
+                \item sub item
+                \begin{itemize}
+                    \item subsub item
+                \end{itemize}
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Section pages}
+        At the beginning of each section, a section page is automatically generated. 
+        
+        We don't recommend the use of subsections since the structure of your presentation should be concise and flat. So \textbf{no} subsection page is provided by default. But you can change this behavior by setting relevant options.
+    \end{frame}
+
+    \wpreset{showsubsectionpage}
+    \subsection{Subsection page looks like this!}
+    \wpreset{showsubsectionpage = false}
+
+    \section{Inside Frames}
+
+    \begin{frame}{Highlighting}
+        Normal text looks like this.
+
+        \structure{Structure text looks like this.}
+
+        \alert{Alerted text looks like this.}
+
+        \structure{Colors} should be used \alert{parsimoniously}, not like this.
+    \end{frame}
+
+    \begin{frame}{Mathematics}
+        The theme uses the \AmS\ Euler font designed by Zapf.
+
+        Formulas:
+        \begin{align}
+            E = mc^2\\
+            {x} = \left(\frac{-b \pm \sqrt{4ac - b^2}}{2a}\right)\\
+            \int_a^b f(t){\rm d}t = F(b) - F(a)
+        \end{align}
+    \end{frame}
+
+    \begin{frame}[fragile]{Blocks}
+        The blocks looks fancy!
+
+        \begin{block}{This is a block}
+            The block has this sentence as its content.
+        \end{block}
+
+        \begin{block}{}
+            What if a block has no title?
+            \tcblower
+            As you wish, no extra space! 
+            
+            By the way, blocks are actually \texttt{tcolorbox}es, where you can use \verb|\tcblower| to separate the contents.
+        \end{block}
+    \end{frame}
+
+    \begin{frame}{Blocks (cont'd)}
+        \begin{block}{Some long text}
+            \lipsum[3]
+        \end{block}
+    \end{frame}
+
+    \begin{frame}{Special blocks}
+        \begin{exampleblock}{Example blocks}
+            Example looks green.
+        \end{exampleblock}
+
+        \begin{alertblock}{Alert blocks}
+            This is a warning!
+        \end{alertblock}
+    \end{frame}
+
+    \begin{frame}[fragile]{Math blocks}
+        \begin{wdefinition}[math block]
+            A \structure{\emph{math block}} is a block containing mathematical content.
+        \end{wdefinition}
+
+        \alert{Note:} the names of the mathematical environments provided by \texttt{wpre} are all prefixed with `\texttt{w}' in order to distinguish from the original ones.
+
+        \begin{wexample}
+            To display a definition block, write
+            \begin{verbatim}
+\begin{wdefinition}[optional name]
+    ...
+\end{wdefinition}\end{verbatim}
+        \end{wexample}
+    \end{frame}
+
+    \begin{frame}{Math Blocks (cont'd)}
+        \begin{wlemma}
+            For $a\perp b$, we have $\Vert a + b\Vert^2 = \Vert a\Vert^2 + \Vert b\Vert^2$.
+        \end{wlemma}
+
+        \begin{wtheorem}
+            This theorem is correct.
+        \end{wtheorem}
+
+        \begin{proof}
+            That's obvious.
+        \end{proof}
+    \end{frame}
+
+    \begin{frame}{Figures}
+        \begin{figure}
+            \includegraphics[height=3em]{../assets/biglogo-red.png}
+            \caption{SJTU Logo}
+        \end{figure}
+    \end{frame}
+
+    \section{Other Tips}
+
+    \begin{frame}[fragile]{Other tips}
+        \begin{itemize}
+            \item We only support a frame title, setting subtitles for frames has no effect.
+            \item The \verb|\part| command hasn't been tested.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Bibliography}
+        \begin{thebibliography}{Dijkstra, 1982}
+        \bibitem[Salomaa, 1973]{Salomaa1973}
+          A.~Salomaa.
+          \newblock {Formal Languages}.
+          \newblock Academic Press, 1973.
+        \bibitem[Dijkstra, 1982]{Dijkstra1982}
+          E.~Dijkstra.
+          \newblock Smoothsort, an alternative for sorting in situ.
+          \newblock {Science of Computer Programming}, 1(3):223--233, 1982.
+        \end{thebibliography}
+      \end{frame}
+
+    \begin{frame}[fragile]
+        \frametitle{Finding Primes Using \LaTeX 3!}
+        \ExplSyntaxOn
+            \int_const:Nn \c_check_bound_int {1000}
+            \intarray_new:Nn \l_isprime_intarray {\c_check_bound_int}
+            \seq_new:N \l_primes_seq
+            \int_new:N \l_prime_cnt_int
+
+            \int_new:N \l_current_prime_idx_int
+            \int_new:N \l_current_prime_int
+            
+            % mark all numbers as potential primes.
+            \int_step_inline:nn {\c_check_bound_int} {
+                \intarray_gset:Nnn \l_isprime_intarray {#1} {
+                    \int_eval:n {1}
+                }
+            }
+
+            % rule out composites
+            \int_step_inline:nnn {2} {\c_check_bound_int} {
+                \int_set:Nn \l_tmpa_int {
+                    \intarray_item:Nn \l_isprime_intarray {#1}
+                }
+
+                % update prime sequence
+                \int_compare:nNnT {\l_tmpa_int} = {1} {
+                    \seq_put_right:Nn \l_primes_seq {#1}
+                    \int_incr:N \l_prime_cnt_int 
+                }
+
+                % ruling out
+                \int_set:Nn \l_current_prime_idx_int {0}
+                \bool_set_true:N \l_tmpa_bool
+                \int_do_until:nn {
+                    \bool_if:nTF {\l_tmpa_bool} {1} {0} = 0
+                } {
+                    \int_incr:N \l_current_prime_idx_int
+                    \int_set:Nn \l_current_prime_int {
+                        \seq_item:Nn \l_primes_seq {\l_current_prime_idx_int}
+                    }
+
+                    \int_set:Nn \l_tmpb_int {#1 * \l_current_prime_int}
+                    
+                    \int_compare:nNnTF {\l_tmpb_int} > {\c_check_bound_int} {
+                        \bool_set_false:N \l_tmpa_bool
+                    } {
+                        \intarray_gset:Nnn \l_isprime_intarray {\l_tmpb_int} {0}
+                    }
+
+                    % linear time method
+                    \int_compare:nT {\int_mod:nn {#1} {\l_current_prime_int} = 0} {
+                        \bool_set_false:N \l_tmpa_bool
+                    }
+
+                    \int_compare:nNnT {\l_current_prime_idx_int} = {\l_prime_cnt_int} {
+                        \bool_set_false:N \l_tmpa_bool
+                    }
+                }
+            }
+
+            \par 
+            The~primes~in~the~first~\int_use:N \c_check_bound_int \ numbers~are:
+            \par
+            \begin{quote}
+                \seq_use:Nn \l_primes_seq {,~} .
+            \end{quote}
+        \ExplSyntaxOff
+    \end{frame}
+\end{document}

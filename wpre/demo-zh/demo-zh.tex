@@ -1,5 +1,5 @@
 \documentclass[no-math, aspectratio=1610, 10pt]{beamer}
-\usetheme{wpre}
+\usetheme[font=harmony-os]{wpre}
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -10,125 +10,118 @@
 \usepackage{lipsum}
 
 
-\title{Beamer theme \texttt{wpre}}
-\subtitle{A quick tour}
+\title{Beamer演示文稿主题 \texttt{wpre}}
+\subtitle{快速上手教程}
 \series{Hello, \texttt{wpre}!}
-\credits{Thanks IPADS, thier slides theme inspired this a lot.}
+\credits{感谢IPADS实验室的课程幻灯片为本模板带来的启示！感谢HarmonyOS Sans字体！}
 \author{WunschUnreif}
 \institute{Basics, SJTU}
 \date{\today}
 
-
 \begin{document}
     \maketitle
 
-    \begin{frame}{Contents}
+    \begin{frame}{目录}
         \tableofcontents
     \end{frame}
 
-    \section{Theme Options}
+    \section{主题选项}
 
     \begin{frame}[fragile]
-        \frametitle{Passing options to \texttt{wpre}}
-        You can pass options when loading this beamer theme in your preamble:
+        \frametitle{为\texttt{wpre}指定选项}
+        可以在导言区加载本主题时指定选项：
         \begin{verbatim}
     \usetheme[key = val, ...]{wpre}
         \end{verbatim}
-        Alternatively, options can be modified in your document using the macro 
+        也可以在文档中任意位置修改选项： 
         \begin{verbatim}
     \wpreset{key = val, ...}
         \end{verbatim}
     \end{frame}
 
     \begin{frame}
-        \frametitle{Available options}
+        \frametitle{可用的选项}
     
-        Metadata:
+        元数据：
         \begin{description}
-            \item[\texttt{series}] Series name of your presentation, course name for example.
-            \item[\texttt{credits}] Credits shown at the bottom on the title page. 
+            \item[\texttt{series}] 演示文稿所属的系列，例如课程代码。
+            \item[\texttt{credits}] 首页底部的谢辞。
         \end{description}
 
-        Behavior control:
+        文稿行为：
         \begin{description}
-            \item[\texttt{showtocsubsection}] Controls whether subsections are shown in the table of contents. Initially \texttt{false}. Options are \texttt{true} and \texttt{false}.
-            \item[\texttt{showsubsectionpage}] Controls whether a title page is added at the beginning of each subsection. Initially \texttt{false}. Options are \texttt{true} and \texttt{false}.
-        \end{description}
-
-        Logo:
-        \begin{description}
-            \item[\texttt{titlelogo}] Path to the logo image shown on the title page. Set to empty to disable.
-            \item[\texttt{framelogo}] Path to the logo image used for frame titles. Set to empty to disable. 
+            \item[\texttt{showtocsubsection}] 是否在目录中显示二级标题。初始值为\texttt{false}。可指定\texttt{true}或\texttt{false}。
+            \item[\texttt{showsubsectionpage}] 是否在小节开始处添加标题页。初始值为\texttt{false}。可指定\texttt{true}或\texttt{false}。
         \end{description}
     
     \end{frame}
 
-    \section{Title Page and Section Pages}
+    \begin{frame}
+        \frametitle{可用的选项（续）}
 
-    \begin{frame}[fragile]{How to make the title page?}
-        \framesubtitle{Use \texttt{maketitle}}
-        Two ways:
+        标志：
+        \begin{description}
+            \item[\texttt{titlelogo}] 首页标志图片的路径，可以设为空来禁用。
+            \item[\texttt{framelogo}] 页面头部标志图片的路径，可以设为空来禁用。
+        \end{description}
+    
+        字体：
+        \begin{description}
+            \item[\texttt{font}] 指定用于正文的字体族。 选项包括\texttt{cmbr}（Cambridge Bright字体族）、 \texttt{beamer}（默认字体族）、 \texttt{harmony-os} （HarmonyOS Sans字体族）。初始值为\texttt{cmbr}。如果要使用中文，请指定\texttt{harmony-os}。
+        \end{description}
+    \end{frame}
+
+    \section{首页和标题页}
+
+    \begin{frame}[fragile]{生成首页}
+        有两种方法：
         \begin{enumerate}
-            \item Use \verb|\maketitle| directly. (recommended)
-            \item Wrap \verb|\titlepage| inside a frame with options \texttt{plain, standout}.
-            \begin{enumerate}
-                \item sub item
-                \begin{enumerate}
-                    \item sub sub item
-                \end{enumerate}
-            \end{enumerate}
+            \item 直接使用 \verb|\maketitle| 命令。
+            \item 把 \verb|\titlepage| 命令包裹在一个\texttt{plain}页面中。
         \end{enumerate}
-
-        If you don't like the standout title page, it is also feasible to put the \verb|\titlepage| in a \texttt{plain} frame. Remember to change the logo accordingly.
     \end{frame}
 
-    \begin{frame}[fragile]{What's on the title page}
-        There are several elements displayed on the title page:
+    \begin{frame}[fragile]{首页元素}
+        首页中可以显示下面的元素：
         \begin{itemize}
-            \item Title, set with \verb|\title|.
-            \item Subtitle, set with \verb|\subtitle|.
-            \item Author, set with \verb|\author|.
-            \item Institute, set with \verb|\institute|.
-            \item Date, set with \verb|\date|.
-            \item Series, displayed in the top left corner, set with \verb|\series|.
-            \item Credits, displayed at the bottom, set with \verb|\credits|.
-            \item Logo, set with \verb|\wpreset{titlelogo = <path>}|.
-            \begin{itemize}
-                \item sub item
-                \begin{itemize}
-                    \item subsub item
-                \end{itemize}
-            \end{itemize}
+            \item 标题，使用 \verb|\title| 设置。
+            \item 副标题，使用 \verb|\subtitle| 设置。
+            \item 作者，使用 \verb|\author| 设置。
+            \item 单位，使用 \verb|\institute| 设置。
+            \item 日期，使用 \verb|\date| 设置。
+            \item 系列，使用 \verb|\series| 设置，在首页左上角显示。
+            \item 谢辞，使用 \verb|\credits| 设置，在首页底部显示。
+            \item 标志，使用 \verb|\wpreset{titlelogo = <path>}| 设置。
         \end{itemize}
     \end{frame}
 
     \begin{frame}
-        \frametitle{Section pages}
-        At the beginning of each section, a section page is automatically generated. 
+        \frametitle{标题页}
+        每节起始处会自动添加一个标题页。
         
-        We don't recommend the use of subsections since the structure of your presentation should be concise and flat. So no subsection page is provided by default. But you can change this behavior by setting relevant options.
+        为了使结构简单，不建议在小节开头添加标题页，这个功能默认也是关闭的。
     \end{frame}
 
     \wpreset{showsubsectionpage}
-    \subsection{Subsection page looks like this!}
+    \subsection{小节标题页长这模样}
     \wpreset{showsubsectionpage = false}
 
-    \section{Inside Frames}
+    \section{页面元素}
 
-    \begin{frame}{Highlighting}
-        Normal text looks like this.
+    \begin{frame}{文字高亮}
+        这是普通文字。
 
-        \structure{Structure text looks like this.}
+        \structure{这是结构文字。}
 
-        \alert{Alerted text looks like this.}
+        \alert{这是警示文字。}
 
-        \structure{Colors} should be used \alert{parsimoniously}, not like this.
+        不要像这样\structure{滥用}\alert{颜色}！
     \end{frame}
 
-    \begin{frame}{Mathematics}
-        The theme uses the \AmS\ Euler font designed by Zapf.
+    \begin{frame}{数学}
+        我们使用 \AmS\ Euler作为数学字体。
 
-        Formulas:
+        示例公式：
         \begin{align}
             E = mc^2\\
             {x} = \left(\frac{-b \pm \sqrt{4ac - b^2}}{2a}\right)\\
@@ -136,39 +129,42 @@
         \end{align}
     \end{frame}
 
-    \begin{frame}[fragile]{Blocks}
-        The blocks looks fancy!
+    \begin{frame}[fragile]{文本块}
+        文本块看起来很现代：
 
-        \begin{block}{This is a block}
-            The block has this sentence as its content.
+        \begin{block}{这是标题}
+            这是内容。
         \end{block}
 
         \begin{block}{}
-            What if a block has no title?
+            \applyparskip
+            能不能没有标题呢？
             \tcblower
-            As you wish, no extra space! 
+            当然可以，也不会有多出来的空间！
             
-            By the way, blocks are actually \texttt{tcolorbox}es, where you can use \verb|\tcblower| to separate the contents.
+            文本块使用的是 \texttt{tcolorbox}，所以可以利用 \verb|\tcblower| 来分割内容。
         \end{block}
     \end{frame}
 
-    \begin{frame}{Blocks (cont'd)}
-        \begin{block}{Some long text}
-            \lipsum[3]
+    \begin{frame}{文本块（续）}
+        \begin{block}{孔乙己}
+            \linespread{1.3}
+            \setlength{\parindent}{2em}
+            孔乙己喝过半碗酒，涨红的脸色渐渐复了原，旁人便又问道，“孔乙己，你当真认识字么？”孔乙己看着问他的人，显出不屑置辩的神气。他们便接着说道，“你怎的连半个秀才也捞不到呢？”孔乙己立刻显出颓唐不安模样，脸上笼上了一层灰色，嘴里说些话；这回可是全是之乎者也之类，一些不懂了。在这时候，众人也都哄笑起来：店内外充满了快活的空气。
         \end{block}
     \end{frame}
 
-    \begin{frame}{Special blocks}
-        \begin{exampleblock}{Example blocks}
-            Example looks green.
+    \begin{frame}{其他文本块}
+        \begin{exampleblock}{示例}
+            这是一个例子。
         \end{exampleblock}
 
-        \begin{alertblock}{Alert blocks}
-            This is a warning!
+        \begin{alertblock}{警告}
+            这是一个警告！
         \end{alertblock}
     \end{frame}
 
-    \begin{frame}[fragile]{Math blocks}
+    \begin{frame}[fragile]{数学块}
         \begin{wdefinition}[math block]
             A \structure{\emph{math block}} is a block containing mathematical content.
         \end{wdefinition}
@@ -205,7 +201,7 @@
         \end{figure}
     \end{frame}
 
-    \section{Other Tips}
+    \section{其他}
 
     \begin{frame}[fragile]{Other tips}
         \begin{itemize}
@@ -215,7 +211,7 @@
     \end{frame}
 
     \begin{frame}
-        \frametitle{Bibliography}
+        \frametitle{参考文献示例}
         \begin{thebibliography}{Dijkstra, 1982}
         \bibitem[Salomaa, 1973]{Salomaa1973}
           A.~Salomaa.
@@ -229,7 +225,7 @@
       \end{frame}
 
     \begin{frame}[fragile]
-        \frametitle{Finding Primes Using \LaTeX 3!}
+        \frametitle{彩蛋：用 \LaTeX 3 寻找素数吧!}
         \ExplSyntaxOn
             \int_const:Nn \c_check_bound_int {1000}
             \intarray_new:Nn \l_isprime_intarray {\c_check_bound_int}

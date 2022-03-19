@@ -1,6 +1,7 @@
 $ENV{'TZ'}='Asia/Shanghai';
 
 ensure_path( 'TEXINPUTS', '..//' );
+ensure_path( 'TTFONTS', '..//' );
 
 # Use xelatex with latexmk.
 $pdf_mode = 5;

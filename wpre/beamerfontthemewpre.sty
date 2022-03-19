@@ -1,32 +1,110 @@
 
-\usepackage{amsmath}
-\usepackage[no-math]{fontspec}
-\usepackage[OT1,euler-digits]{eulervm}
+\RequirePackage{ifthen}
+\RequirePackage{amsmath}
+\RequirePackage[no-math]{fontspec}
+\RequirePackage{xeCJK}
+\RequirePackage[OT1,euler-digits]{eulervm}
+\RequirePackage{etoolbox}
 
 
-\setmainfont{cmun}[
-    Extension=.otf,
-    UprightFont=*rm,
-    NFSSFamily=cmrm
-]
+%%% Options %%%
 
-\setsansfont{cmunb}[
-    Extension=.otf,
-    UprightFont=*mr,
-    ItalicFont=*mo,
-    BoldFont=*sr,
-    BoldItalicFont=*so,
-    NFSSFamily=cmbr
-]
+\def\wpre@font@options{%
+    font = {
+        choices = {
+            cmbr,
+            harmony-os,
+            beamer
+        },
+        initial = cmbr
+    }%
+}
 
-\setmonofont{cmun}[
-    Extension=.otf,
-    UprightFont=*tt,
-    ItalicFont=*st,
-    BoldFont=*tb,
-    BoldItalicFont=*tx,
-    NFSSFamily=cmtl
-]
+
+%%% Font choices %%%
+
+\AtEndPreamble{%
+    \ifthenelse{\equal{\wpre@font}{beamer}}{}{}%
+%
+    \ifthenelse{\equal{\wpre@font}{cmbr}}{%
+        \wpre@font@use@cmbr%
+    }{}%%
+%
+    \ifthenelse{\equal{\wpre@font}{harmony-os}}{%
+        \usepackage[fontset=none]{ctex}%
+        \wpre@font@use@harmony%
+        \linespread{1.3}%
+    }{}%%
+}
+
+\def\wpre@font@use@cmbr{%
+    \setmainfont{cmun}[
+        Extension=.otf,
+        UprightFont=*rm,
+        NFSSFamily=cmrm
+    ]%
+%
+    \setsansfont{cmunb}[
+        Extension=.otf,
+        UprightFont=*mr,
+        ItalicFont=*mo,
+        BoldFont=*sr,
+        BoldItalicFont=*so,
+        NFSSFamily=cmbr
+    ]%
+%
+    \setmonofont{cmun}[
+        Extension=.otf,
+        UprightFont=*tt,
+        ItalicFont=*st,
+        BoldFont=*tb,
+        BoldItalicFont=*tx,
+        NFSSFamily=cmtl
+    ]%
+}
+
+\def\wpre@font@use@harmony{%
+    \setmainfont{HarmonyOS_Sans}[
+        Extension=.ttf,
+        UprightFont=*_Light,
+        BoldFont=*_Medium,
+        ItalicFont=*_Light_Italic,
+        BoldItalicFont=*_Medium_Italic,
+        NFSSFamily=hmrm
+    ]%
+%
+    \setsansfont{HarmonyOS_Sans}[
+        Extension=.ttf,
+        UprightFont=*_Light,
+        BoldFont=*_Medium,
+        ItalicFont=*_Light_Italic,
+        BoldItalicFont=*_Medium_Italic,
+        NFSSFamily=hmsans
+    ]%
+%
+    \setCJKmainfont{HarmonyOS_Sans_SC}[
+        Extension=.ttf,
+        UprightFont=*_Light,
+        BoldFont=*_Medium,
+        NFSSFamily=hmrm
+    ]%
+%
+    \setCJKsansfont{HarmonyOS_Sans_SC}[
+        Extension=.ttf,
+        UprightFont=*_Light,
+        BoldFont=*_Medium,
+        NFSSFamily=hmsans
+    ]%
+    \setmonofont{FiraMono}[
+        Extension=.otf,
+        UprightFont=*-Regular,
+        BoldFont=*-Medium,
+        ItalicFont=*-Oblique,
+        BoldItalicFont=*-MediumOblique,
+    ]%
+}
+
+%%% Font styles %%%
 
 \setbeamerfont{title}{size=\LARGE}
 \setbeamerfont{subtitle}{size=\large}
