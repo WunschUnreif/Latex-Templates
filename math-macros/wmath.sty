@@ -42,4 +42,9 @@
 
 \let\oldPr\Pr 
 \renewcommand{\Pr}[1][{}]{\oldPr\left[{#1}\right]}
-\newcommand{\E}[1][{}]{E\left[{#1}\right]}
+
+\newcommand{\ExpectationSymbol}{\mathop{\operatorname{E}}}
+\newcommand{\E}[1][{}]{\ExpectationSymbol\left[{#1}\right]}
+
+\newcommand{\VarianceSymbol}{\mathop{\operatorname{Var}}}
+\newcommand{\Var}[1][{}]{\VarianceSymbol\left[{#1}\right]}
