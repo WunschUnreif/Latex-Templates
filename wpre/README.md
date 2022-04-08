@@ -8,25 +8,15 @@
 
 ### 英文
 
-<div width="100%" style="display:flex; justify-content: space-between;">
-    <div style="width: 49%"><img src="readme-fig/en-1.png"/></div>
-    <div style="width: 49%"><img src="readme-fig/en-2.png"/></div>
-</div>
-<div width="100%" style="display:flex; justify-content: space-between;">
-    <div style="width: 49%"><img src="readme-fig/en-3.png"/></div>
-    <div style="width: 49%"><img src="readme-fig/en-4.png"/></div>
-</div>
+|![snapshot en 1](readme-fig/en-1.png)|![snapshot en 2](readme-fig/en-2.png)|
+|:--:|:--:|
+|![snapshot en 3](readme-fig/en-3.png)|![snapshot en 4](readme-fig/en-4.png)|
 
 ### 中文
 
-<div width="100%" style="display:flex; justify-content: space-between;">
-    <div style="width: 49%"><img src="readme-fig/zh-1.png"/></div>
-    <div style="width: 49%"><img src="readme-fig/zh-2.png"/></div>
-</div>
-<div width="100%" style="display:flex; justify-content: space-between;">
-    <div style="width: 49%"><img src="readme-fig/zh-3.png"/></div>
-    <div style="width: 49%"><img src="readme-fig/zh-4.png"/></div>
-</div>
+|![snapshot zh 1](readme-fig/zh-1.png)|![snapshot zh 2](readme-fig/zh-2.png)|
+|:--:|:--:|
+|![snapshot zh 3](readme-fig/zh-3.png)|![snapshot zh 4](readme-fig/zh-4.png)|
 
 ## 安装说明
 
