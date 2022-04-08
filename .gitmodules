@@ -1,3 +1,12 @@
 [submodule "wpre/HarmonyOS-Sans"]
 	path = wpre/HarmonyOS-Sans
 	url = https://github.com/iRoZhi/HarmonyOS-Sans.git
+[submodule "wpre/source-han-sans-sc"]
+	path = wpre/source-han-sans-sc
+	url = https://github.com/wweir/source-han-sans-sc.git
+[submodule "wpre/source-sans"]
+	path = wpre/source-sans
+	url = https://github.com/adobe-fonts/source-sans.git
+[submodule "wpre/source-code-pro"]
+	path = wpre/source-code-pro
+	url = https://github.com/adobe-fonts/source-code-pro.git

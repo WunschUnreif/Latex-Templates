@@ -13,8 +13,9 @@
     font = {
         choices = {
             cmbr,
+            beamer,
             harmony-os,
-            beamer
+            sourcehan,
         },
         initial = cmbr
     }%
@@ -28,13 +29,19 @@
 %
     \ifthenelse{\equal{\wpre@font}{cmbr}}{%
         \wpre@font@use@cmbr%
-    }{}%%
+    }{}%
 %
     \ifthenelse{\equal{\wpre@font}{harmony-os}}{%
         \usepackage[fontset=none]{ctex}%
         \wpre@font@use@harmony%
         \linespread{1.3}%
-    }{}%%
+    }{}%
+%
+    \ifthenelse{\equal{\wpre@font}{sourcehan}}{%
+        \usepackage[fontset=none]{ctex}%
+        \wpre@font@use@sourcehan%
+        \linespread{1.3}%
+    }{}%
 }
 
 \def\wpre@font@use@cmbr{%
@@ -101,6 +108,51 @@
         BoldFont=*-Medium,
         ItalicFont=*-Oblique,
         BoldItalicFont=*-MediumOblique,
+    ]%
+}
+
+\def\wpre@font@use@sourcehan{%
+    \setmainfont{SourceSans3}[
+        Extension=.otf,
+        UprightFont=*-Light,
+        BoldFont=*-Semibold,
+        ItalicFont=*-LightIt,
+        BoldItalicFont=*-SemiboldIt,
+        NFSSFamily=sourcesans
+    ]%
+%
+    \setsansfont{SourceSans3}[
+        Extension=.otf,
+        UprightFont=*-Light,
+        BoldFont=*-Semibold,
+        ItalicFont=*-LightIt,
+        BoldItalicFont=*-SemiboldIt,
+        NFSSFamily=sourcesans
+    ]%
+%
+    \setCJKmainfont{SourceHanSansSC}[
+        Extension=.otf,
+        UprightFont=*-Light,
+        BoldFont=*-Medium,
+        ItalicFont=*-ExtraLight,
+        BoldItalicFont=*-Light,
+        NFSSFamily=sourcehan
+    ]%
+%
+    \setCJKsansfont{SourceHanSansSC}[
+        Extension=.otf,
+        UprightFont=*-Light,
+        BoldFont=*-Medium,
+        ItalicFont=*-ExtraLight,
+        BoldItalicFont=*-Light,
+        NFSSFamily=sourcehan
+    ]%
+    \setmonofont{SourceCodePro}[
+        Extension=.otf,
+        UprightFont=*-Light,
+        BoldFont=*-Semibold,
+        ItalicFont=*-LightIt,
+        BoldItalicFont=*-SemiboldIt,
     ]%
 }
 
