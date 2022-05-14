@@ -1,9 +1,5 @@
 
 \RequirePackage{ifthen}
-\RequirePackage{amsmath}
-\RequirePackage[no-math]{fontspec}
-\RequirePackage{xeCJK}
-\RequirePackage[OT1,euler-digits]{eulervm}
 \RequirePackage{etoolbox}
 
 
@@ -25,6 +21,8 @@
 %%% Font choices %%%
 
 \AtEndPreamble{%
+    \usepackage[no-math]{fontspec}%
+%
     \ifthenelse{\equal{\wpre@font}{beamer}}{}{}%
 %
     \ifthenelse{\equal{\wpre@font}{cmbr}}{%
@@ -42,6 +40,9 @@
         \wpre@font@use@sourcehan%
         \linespread{1.3}%
     }{}%
+%
+    \usepackage[OT1, euler-hat-accent]{eulervm}%
+    \usefonttheme{professionalfonts}%
 }
 
 \def\wpre@font@use@cmbr{%
