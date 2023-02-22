@@ -20,8 +20,8 @@
 
 %%% Font choices %%%
 
-\AtEndPreamble{%
-    \usepackage[no-math]{fontspec}%
+\BeforeBeginEnvironment{document}{%
+    \usepackage{fontspec}%
 %
     \ifthenelse{\equal{\wpre@font}{beamer}}{}{}%
 %
@@ -42,7 +42,6 @@
     }{}%
 %
     \usepackage[OT1, euler-hat-accent]{eulervm}%
-    \usefonttheme{professionalfonts}%
 }
 
 \def\wpre@font@use@cmbr{%
