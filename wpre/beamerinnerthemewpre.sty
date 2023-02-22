@@ -140,8 +140,9 @@
         \begin{beamercolorbox}[sep=0cm,left,wd=\paperwidth, ht=\wpre@sectiontitleht,dp=0pt]{section title}%
             \begin{minipage}[b][\wpre@sectiontitleht]{0.75\beamer@leftmargin}
                 \;\vfill%
+                \usebeamercolor*{primary}%
                 \tikz{
-                    \draw[fill=sjtu-red,line width=0pt] (0em, 1ex) -- (0.3em, 1ex) -- (0.8em, 0ex) -- (0.3em, -1ex) -- (0em, -1ex) -- cycle;
+                    \draw[fill=fg,line width=0pt] (0em, 1ex) -- (0.3em, 1ex) -- (0.8em, 0ex) -- (0.3em, -1ex) -- (0em, -1ex) -- cycle;
                 }
                 \vfill\vspace*{1ex}%
             \end{minipage}%
@@ -184,8 +185,9 @@
         \begin{beamercolorbox}[sep=0cm,left,wd=\paperwidth, ht=\wpre@sectiontitleht,dp=0pt]{section title shaded}%
             \begin{minipage}[b][\wpre@sectiontitleht]{0.75\beamer@leftmargin}
                 \;\vfill%
+                \usebeamercolor*{primary}%
                 \tikz{
-                    \draw[fill=sjtu-red!45,draw=none] (0em, 1ex) -- (0.3em, 1ex) -- (0.8em, 0ex) -- (0.3em, -1ex) -- (0em, -1ex) -- cycle;
+                    \draw[fill=fg!45,draw=none] (0em, 1ex) -- (0.3em, 1ex) -- (0.8em, 0ex) -- (0.3em, -1ex) -- (0em, -1ex) -- cycle;
                 }
                 \vfill\vspace*{1ex}%
             \end{minipage}%
@@ -238,6 +240,7 @@
 
 \newcommand{\drawblocksidebar}[1][block title]{
     \path[draw=none, fill=#1.fg] (frame.south west) -- (frame.north west) arc (90:180:3pt) -- ([xshift=-3pt,yshift=3pt]frame.south west) arc (180:270:3pt);
+    % \path[draw=#1.fg, line width=0mm] (frame.south west) -- (frame.south east) -- (frame.north east) -- (frame.north west);
 }
 
 \newcommand{\blockboxspecnotitle}[2]{%
@@ -253,6 +256,7 @@
         frame hidden,%
         top=2pt, bottom=2pt, right=1ex, left=1ex,%
         toptitle=2pt,%
+        segmentation style={solid, draw=black!36!white},%
         overlay = {\drawblocksidebar[#1]}%
     ]%
         \setlength{\parskip}{\wpre@parskip}%
@@ -271,7 +275,8 @@
         frame hidden,%
         top=2pt, bottom=2pt, right=1ex, left=1ex,%
         toptitle=2pt,%
-        overlay = {\drawblocksidebar[#1]}%
+        segmentation style={solid, draw=black!36!white},%
+        overlay = {\drawblocksidebar[#1]},%
     ]%
         \setlength{\parskip}{\wpre@parskip}%
 }
@@ -327,13 +332,15 @@
     {}{}%
     {\normalfont}{}%
     {%
-        \setbeamercolor{block title}{%
-            fg = sjtu-purple,%
-            bg = sjtu-purple!5%
+        \setbeamercolor*{block title}{%
+            use = important,%
+            fg = important.fg,%
+            bg = important.fg!5%
         }%
-        \setbeamercolor{block body}{%
+        \setbeamercolor*{block body}{%
+            use = important,%
             fg = black,%
-            bg = sjtu-purple!5%
+            bg = important.fg!5%
         }%
         \normalfont%
     }{}{ }%
@@ -343,13 +350,15 @@
     {}{}%
     {\normalfont}{}%
     {%
-        \setbeamercolor{block title}{%
-            fg = sjtu-blue,%
-            bg = sjtu-blue!5%
+        \setbeamercolor*{block title}{%
+            use = info,%
+            fg = info.fg,%
+            bg = info.fg!5%
         }%
-        \setbeamercolor{block body}{%
+        \setbeamercolor*{block body}{%
+            use = info,%
             fg = black,%
-            bg = sjtu-blue!5%
+            bg = info.fg!5%
         }%
         \normalfont%
     }{}{ }%
@@ -359,15 +368,11 @@
     {}{}%
     {\normalfont}{}%
     {%
-        \setbeamercolor{block title}{%
-            use = block title example,
-            fg = block title example.fg,%
-            bg = block title example.bg%
+        \setbeamercolor*{block title}{%
+            parent = block title example,%
         }%
-        \setbeamercolor{block body}{%
-            use = block body example,
-            fg = block body example.fg,%
-            bg = block body example.bg%
+        \setbeamercolor*{block body}{%
+            parent = block body example,%
         }%
         \normalfont%
     }{}{ }%
@@ -377,6 +382,7 @@
 
 \theoremstyle{wpredef}
 \newtheorem*{wdefinition}{Definition}
+\newtheorem*{wnotation}{Notation}
 \newtheorem*{wremark}{Remark}
 
 \theoremstyle{wprethm}
@@ -420,7 +426,8 @@
         \setkeys{beamerframe}{c}
         \setkeys{beamerframe}{noframenumbering}
         \setbeamercolor{background canvas}{
-            bg = sjtu-red,
+            use = primary,
+            bg = primary.fg,
             fg = white
         }
         \usebeamercolor[bg]{text}%
@@ -442,4 +449,4 @@
 
 %%% Horizontal rules %%%
 \let\wpre@hrulefill\hrulefill
-\renewcommand{\hrulefill}{{\color{sjtu-gray!80!black}\wpre@hrulefill}}
+\renewcommand{\hrulefill}{{\usebeamercolor{unimportant}\color{fg!60}\wpre@hrulefill}}

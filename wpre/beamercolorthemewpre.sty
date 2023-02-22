@@ -1,4 +1,5 @@
 
+% Standard SJTU VI colors
 \definecolor{sjtu-red}{HTML}{C8161E}
 \definecolor{sjtu-blue}{HTML}{0086D1}
 \definecolor{sjtu-orange}{HTML}{F08300}
@@ -7,48 +8,68 @@
 \definecolor{sjtu-green}{HTML}{338D1D}
 \definecolor{sjtu-purple}{HTML}{004098}
 
+% Theme colors of the slides, customizable
+\setbeamercolor{primary}{
+    fg = sjtu-red,
+    bg = white
+}
+\setbeamercolor{alert}{
+    fg = sjtu-orange,
+    bg = white
+}
+\setbeamercolor*{info}{ % definitions, etc
+    fg = sjtu-blue,
+    bg = white
+}
+\setbeamercolor*{example}{
+    fg = sjtu-green,
+    bg = white
+}
+\setbeamercolor*{important}{ % theorems block, etc
+    fg = sjtu-purple,
+    bg = white
+}
+\setbeamercolor*{unimportant}{ % page number, etc.
+    fg = black!60!white,
+    bg = white
+}
 
-\setbeamercolor{structure}{fg=sjtu-red}
-\setbeamercolor{alerted text}{fg=sjtu-orange}
+% Detailed colors
+\setbeamercolor*{structure}{parent = primary}
+\setbeamercolor*{alerted text}{parent = alert}
 
-\setbeamercolor{title}{fg=sjtu-red}
-\setbeamercolor{subtitle}{fg=sjtu-red}
+\setbeamercolor*{title}{parent = primary}
+\setbeamercolor*{subtitle}{parent = primary}
 
-\setbeamercolor{item}{fg=sjtu-red}
+\setbeamercolor*{item}{parent = primary}
 
-\setbeamercolor{itemize item}{fg=sjtu-red}
-\setbeamercolor{itemize subitem}{fg=sjtu-red}
-\setbeamercolor{itemize subsubitem}{fg=sjtu-red}
+\setbeamercolor*{itemize item}{parent = primary}
+\setbeamercolor*{itemize subitem}{parent = primary}
+\setbeamercolor*{itemize subsubitem}{parent = primary}
 
-\setbeamercolor{enumerate item}{fg=sjtu-red}
-\setbeamercolor{enumerate subitem}{fg=sjtu-red}
-\setbeamercolor{enumerate subsubitem}{fg=sjtu-red}
-\setbeamercolor{enumerate mini template}{fg=sjtu-red}
+\setbeamercolor*{enumerate item}{parent = primary}
+\setbeamercolor*{enumerate subitem}{parent = primary}
+\setbeamercolor*{enumerate subsubitem}{parent = primary}
+\setbeamercolor*{enumerate mini template}{parent = primary}
 
-\setbeamercolor{description item}{fg=sjtu-red}
+\setbeamercolor*{description item}{parent = primary}
 
-\setbeamercolor{footline}{fg=black!60!white}
+\setbeamercolor*{footline}{parent = unimportant}
 
-\setbeamercolor{titlelike}{fg=sjtu-red}
-\setbeamercolor{frametitle}{fg=sjtu-red}
+\setbeamercolor*{titlelike}{parent = primary}
+\setbeamercolor*{frametitle}{parent = primary}
 
-\setbeamercolor{section title}{fg=sjtu-red}
-\setbeamercolor{section title shaded}{
+\setbeamercolor*{section title}{parent = primary}
+\setbeamercolor*{section title shaded}{
     use = section title,
     fg  = section title.fg!45
 }
-\setbeamercolor{section in toc}{fg=sjtu-red}
+\setbeamercolor*{section in toc}{parent = primary}
 
-\setbeamercolor{subsection title}{fg=sjtu-red}
+\setbeamercolor*{subsection title}{parent = primary}
 
-\setbeamercolor{bibliography entry title}{
-    use = normal text,
-    fg  = normal text.fg
-}
-\setbeamercolor{bibliography entry location}{
-    use = normal text,
-    fg  = normal text.fg!45
-}
+\setbeamercolor{bibliography entry title}{parent = normal text}
+\setbeamercolor*{bibliography entry location}{parent = unimportant}
 
 
 \setbeamercolor{block body}{
